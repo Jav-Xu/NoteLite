@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">NoteLite</string>
+
+    <string name="note_title_hint">Enter a title for the note.</string>
+    <string name="note_title_label">Title</string>
+    <string name="note_details_lable">Details</string>
+    <string name="note_solved_lable">Solved</string>
+    <string name="date_picker_title">Date of note:</string>
+    <string name="new_note">New Note</string>
+    <string name="note_report_text">SEND NOTE REPOTRT</string>
+    <string name="note_report">%1$s! The note was noted on %2$s. %3$s, and %4$s</string>
+    <string name="note_report_solved">The case is solved</string>
+    <string name="note_report_unsolved">The case is not solved</string>
+    <string name="note_report_no_suspect">there is no suspect.</string>
+    <string name="note_report_suspect">the suspect is %s.</string>
+    <string name="note_report_subject">NoteLite Note Report</string>
+    <string name="send_report">Send note report via</string>
+    <string name="change_style">Change Style</string>
+    <string name="delete_note">Delete Note</string>
+</resources>
