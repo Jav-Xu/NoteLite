@@ -100,7 +100,7 @@ public class NoteDetailFragment extends Fragment implements View.OnClickListener
         mDetailNoteSolvedCheckBox = (CheckBox) view.findViewById(R.id.detail_note_solved_check_box);
 
         mCollapsingToolbarLayout.setTitle(mNote.getNoteTitle());
-        new Utils(getActivity()).loadImage(mNote.getNoteImagePath(), mDetailNotePicImageView);
+        Utils.loadImage(mNote.getNoteImagePath(), mDetailNotePicImageView);
         mDetailNoteTitleEditText.setText(mNote.getNoteTitle());
         mDetailNoteTitleEditText.setSelection(mNote.getNoteTitle().length());
         mDetailNoteDateButton.setText(mNote.getNoteDate().toString());
@@ -243,7 +243,7 @@ public class NoteDetailFragment extends Fragment implements View.OnClickListener
                 mNote.update(mNote.getId());
                 break;
             case REQUEST_PHOTO:
-                new Utils(getActivity()).loadImage(mNote.getNoteImagePath(), mDetailNotePicImageView);
+                Utils.loadImage(mNote.getNoteImagePath(), mDetailNotePicImageView);
                 break;
             default:
         }

@@ -54,7 +54,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
 
         public void bindView(final Note note) {
             mItemNoteTitleTextView.setText(note.getNoteTitle());
-            new Utils(mContext).loadImage(note.getNoteImagePath(), mItemNotePicImageView);
+            Utils.loadImage(note.getNoteImagePath(), mItemNotePicImageView);
             mItemNoteDateTextView.setText(note.getNoteDate().toString());
             mItemNoteSolvedCheckBox.setChecked(note.isNoteSolved());
 

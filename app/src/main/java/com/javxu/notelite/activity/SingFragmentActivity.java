@@ -23,9 +23,9 @@ public abstract class SingFragmentActivity extends AppCompatActivity {
         FragmentManager manager = getSupportFragmentManager();
         Fragment fragment = manager.findFragmentById(R.id.fragment_container);
 
-        if (fragment == null){
+        if (fragment == null) {
             fragment = getFragment();
-            manager.beginTransaction().add(R.id.fragment_container,fragment).commit();
+            manager.beginTransaction().add(R.id.fragment_container, fragment).commit();
         }
 
     }
