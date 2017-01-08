@@ -136,8 +136,6 @@ public class MainActivity extends AppCompatActivity {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 break;
-            case R.id.style:
-                break;
             default:
         }
         return super.onOptionsItemSelected(item);
