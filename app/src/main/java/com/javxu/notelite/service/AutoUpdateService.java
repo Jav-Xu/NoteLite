@@ -20,7 +20,7 @@ import okhttp3.Response;
 
 /**
  * Created by Jav-Xu on 2017/1/8.
- */import static com.javxu.notelite.utils.Utils.handleWeatherResponse;
+ */
 
 public class AutoUpdateService extends Service {
     public AutoUpdateService() {
@@ -52,9 +52,7 @@ public class AutoUpdateService extends Service {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString = pref.getString("weather", null);
         if (weatherString != null) {
-            Weather weather = handleWeatherResponse(weatherString);
-            String weatherId = weather.basic.weatherId;
-            String weatherUrl = "https://api.heweather.com/x3/weather?cityid=" + weatherId + "&key=bc0418b57b2d4918819d3974ac1285d9";
+            String weatherUrl = "https://api.heweather.com/x3/weather?cityid=CN101010100&key=bc0418b57b2d4918819d3974ac1285d9";
             Utils.sendOkHttpRequest(weatherUrl, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
