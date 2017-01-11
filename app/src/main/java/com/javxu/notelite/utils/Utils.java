@@ -4,7 +4,6 @@ import android.os.Environment;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.signature.StringSignature;
 import com.google.gson.Gson;
 import com.javxu.notelite.R;
 import com.javxu.notelite.gson.Weather;
@@ -14,7 +13,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.util.UUID;
 
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -31,8 +29,7 @@ public class Utils {
     }
 
     public static void loadImage(String s, ImageView view) {
-        Glide.with(MyApplication.getContext()).load(s).signature(new StringSignature(UUID.randomUUID().toString()))
-                .placeholder(R.mipmap.ic_launcher).into(view);
+        Glide.with(MyApplication.getContext()).load(s).placeholder(R.mipmap.ic_launcher).into(view);
     }
 
     public static void sendOkHttpRequest(String url, Callback callback) {
