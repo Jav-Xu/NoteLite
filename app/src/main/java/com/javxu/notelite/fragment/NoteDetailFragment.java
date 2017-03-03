@@ -218,8 +218,8 @@ public class NoteDetailFragment extends Fragment implements View.OnClickListener
                 }
                 imageUri = Uri.fromFile(new File(Utils.getExternalFileDir(),
                         "NoteLite_IMG_" + String.valueOf(mNote.getId()) + "-" + Math.random() * 1000 + ".jpg"));
-                mNote.setNoteImagePath(String.valueOf(imageUri));
-                mNote.update(mNote.getId());
+                //mNote.setNoteImagePath(String.valueOf(imageUri));
+                //mNote.update(mNote.getId());
                 Intent shootIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 shootIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
                 startActivityForResult(shootIntent, REQUEST_PHOTO);
@@ -247,6 +247,8 @@ public class NoteDetailFragment extends Fragment implements View.OnClickListener
                 mNote.update(mNote.getId());
                 break;
             case REQUEST_PHOTO:
+                mNote.setNoteImagePath(String.valueOf(imageUri));
+                mNote.update(mNote.getId());
                 Utils.loadImage(mNote.getNoteImagePath(), mDetailNotePicImageView);
                 break;
             default:
