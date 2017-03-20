@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.javxu.notelite.R;
+import com.javxu.notelite.application.MyApplication;
 import com.javxu.notelite.gson.Weather;
 
 import org.json.JSONArray;

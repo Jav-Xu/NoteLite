@@ -58,8 +58,6 @@ public class MainActivity extends AppCompatActivity {
                         fab.show();
                         break;
                     case 1:
-                        fab.hide();
-                        break;
                     case 2:
                         fab.hide();
                         break;
@@ -90,6 +88,9 @@ public class MainActivity extends AppCompatActivity {
                         mDrawerLayout.closeDrawers();
                         break;
                     case R.id.nav_encourage:
+                        mDrawerLayout.closeDrawers();
+                        break;
+                    case R.id.nav_share:
                         mDrawerLayout.closeDrawers();
                         break;
                     case R.id.nav_author:
@@ -125,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViewPager() {
-        String[] titles = {"笔记列表", "今日天气", "那年今日"};
+        String[] titles = {"笔记列表", "今日天气", "微信精选"};
         mHomeFragmentAdapter = new HomeFragmentApater(getSupportFragmentManager(), Arrays.asList(titles));
         mViewPager.setAdapter(mHomeFragmentAdapter);
         mTabLayout.setupWithViewPager(mViewPager); // 将TabLayout和ViewPager关联起来。

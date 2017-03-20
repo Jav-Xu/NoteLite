@@ -1,4 +1,4 @@
-package com.javxu.notelite.utils;
+package com.javxu.notelite.application;
 
 import android.app.Application;
 import android.content.Context;

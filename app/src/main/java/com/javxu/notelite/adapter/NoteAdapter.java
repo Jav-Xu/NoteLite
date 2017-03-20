@@ -53,18 +53,21 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
         }
 
         public void bindView(final Note note) {
-            mItemNoteTitleTextView.setText(note.getNoteTitle());
-            Utils.loadImage(note.getNoteImagePath(), mItemNotePicImageView);
-            mItemNoteDateTextView.setText(note.getNoteDate().toString());
-            mItemNoteSolvedCheckBox.setChecked(note.isNoteSolved());
+            if (note != null) {
+                mItemNoteTitleTextView.setText(note.getNoteTitle());
+                Utils.loadImage(note.getNoteImagePath(), mItemNotePicImageView);
+                mItemNoteDateTextView.setText(note.getNoteDate().toString());
+                mItemNoteSolvedCheckBox.setChecked(note.isNoteSolved());
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = NoteDetailActivity.getIntent(mContext, note.getId());
-                    mContext.startActivity(intent);
-                }
-            });
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = NoteDetailActivity.getIntent(mContext, note.getId());
+                        mContext.startActivity(intent);
+                    }
+                });
+            }
+
         }
     }
 
