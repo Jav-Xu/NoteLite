@@ -39,34 +39,6 @@ public class Utils {
         client.newCall(request).enqueue(callback);
     }
 
-    /**
-     * 处理并解析历史上的今天JSON数据
-     *
-     * @param reponse
-     * @return [List(dieEvent), List(birthEvent), List(bangEvent)]
-     */
-    /*public static List<List<Event>> handleTodayResponse(String reponse) {
-        List<List<Event>> threeEventList = null;
-        if (!TextUtils.isEmpty(reponse)) {
-            try {
-                JSONObject object = new JSONObject(reponse);
-                String month = object.getString("month");
-                String day = object.getString("day");
-                JSONArray array = object.getJSONArray("res");
-
-                for (int i = 0; i < array.length(); i++) {
-                    JSONObject eventObject = array.getJSONObject(i);
-                    String events = eventObject.getString("lists");
-                    List<Event> eventList = new Gson().fromJson(events, new TypeToken<List<Event>>() {
-                    }.getType());
-                    threeEventList.add(eventList);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        return threeEventList;
-    }*/
 
     /**
      * @param reponse

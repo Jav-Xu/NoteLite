@@ -10,4 +10,6 @@ package com.javxu.notelite.utils;
  */
 
 public class StaticClass {
+
+    public static final String WeChat_Key = "78f723dccf85aea324a3cf0daac97f35"; // juhe 朋友圈热文
 }

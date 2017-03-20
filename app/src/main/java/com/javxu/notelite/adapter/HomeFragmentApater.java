@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.javxu.notelite.fragment.subfragment.NoteListFragment;
-import com.javxu.notelite.fragment.subfragment.PastTodayFragment;
+import com.javxu.notelite.fragment.subfragment.WeChatFragment;
 import com.javxu.notelite.fragment.subfragment.WeatherFragment;
 
 import java.util.List;
@@ -36,7 +36,7 @@ public class HomeFragmentApater extends FragmentStatePagerAdapter {
                 fragment = new WeatherFragment();
                 break;
             case 2:
-                fragment = new PastTodayFragment();
+                fragment = new WeChatFragment();
                 break;
             default:
         }

@@ -9,6 +9,7 @@
     </style>
 
     <style name="NoteDetailActivityTheme" parent="AppTheme"></style>
+    <style name="BackActivityTheme" parent="Theme.AppCompat.Light.DarkActionBar"></style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
