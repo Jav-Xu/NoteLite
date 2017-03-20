@@ -15,19 +15,16 @@ import com.javxu.notelite.R;
 import com.javxu.notelite.adapter.WeChatAdapter;
 import com.javxu.notelite.bean.WeChat;
 import com.javxu.notelite.utils.StaticClass;
-import com.javxu.notelite.utils.Utils;
+import com.kymjs.rxvolley.RxVolley;
+import com.kymjs.rxvolley.client.HttpCallback;
+import com.kymjs.rxvolley.http.VolleyError;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 public class WeChatFragment extends Fragment {
 
@@ -64,27 +61,18 @@ public class WeChatFragment extends Fragment {
 
     private void initData() {
         String url = "http://v.juhe.cn/weixin/query?key=" + StaticClass.WeChat_Key;
-        Utils.sendOkHttpRequest(url, new Callback() {
+        RxVolley.get(url, new HttpCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getActivity(), "加载失败", Toast.LENGTH_SHORT).show();
-                        mSwipeRefreshLayout.setRefreshing(false);
-                    }
-                });
+            public void onFailure(VolleyError error) {
+                super.onFailure(error);
+                Toast.makeText(getActivity(), "加载失败", Toast.LENGTH_SHORT).show();
+                mSwipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String s = response.body().string();
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        parseJSON(s);
-                    }
-                });
+            public void onSuccess(String t) {
+                super.onSuccess(t);
+                parseJSON(t);
             }
         });
     }

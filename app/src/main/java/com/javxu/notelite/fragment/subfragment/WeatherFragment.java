@@ -20,13 +20,11 @@ import com.javxu.notelite.R;
 import com.javxu.notelite.gson.Forecast;
 import com.javxu.notelite.gson.Weather;
 import com.javxu.notelite.service.AutoUpdateService;
+import com.javxu.notelite.utils.StaticClass;
 import com.javxu.notelite.utils.Utils;
-
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
+import com.kymjs.rxvolley.RxVolley;
+import com.kymjs.rxvolley.client.HttpCallback;
+import com.kymjs.rxvolley.http.VolleyError;
 
 public class WeatherFragment extends Fragment {
 
@@ -96,64 +94,52 @@ public class WeatherFragment extends Fragment {
 
     private void loadBingPic() {
         String requestBingPic = "http://guolin.tech/api/bing_pic";
-        Utils.sendOkHttpRequest(requestBingPic, new Callback() {
+        RxVolley.get(requestBingPic, new HttpCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String bingPicUrl = response.body().string();
+            public void onSuccess(String t) {
+                super.onSuccess(t);
+                final String bingPicUrl = t;
                 SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
                 editor.putString("bing_pic", bingPicUrl);
                 editor.apply();
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Utils.loadImage(bingPicUrl, bingPicImg);
-                    }
-                });
+                Utils.loadImage(bingPicUrl,bingPicImg);
+            }
+
+            @Override
+            public void onFailure(VolleyError error) {
+                super.onFailure(error);
             }
         });
     }
 
     public void requestBJWeather() {
-        String weatherUrl = "https://api.heweather.com/x3/weather?cityid=CN101010100&key=bc0418b57b2d4918819d3974ac1285d9";
-        Utils.sendOkHttpRequest(weatherUrl, new Callback() {
+        String weatherUrl = StaticClass.BJWEATHER;
+        RxVolley.get(weatherUrl, new HttpCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getActivity(), "获取天气信息失败", Toast.LENGTH_LONG).show();
-                        swipeRefreshlayout.setRefreshing(false);
-                    }
-                });
+            public void onFailure(VolleyError error) {
+                error.printStackTrace();
+                Toast.makeText(getActivity(), "获取天气信息失败", Toast.LENGTH_LONG).show();
+                swipeRefreshlayout.setRefreshing(false);
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String weatherText = response.body().string();
+            public void onSuccess(String t) {
+                super.onSuccess(t);
+                final String weatherText = t;
                 final Weather weather = Utils.handleWeatherResponse(weatherText);
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (weather != null && "ok".equals(weather.status)) {
-                            SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
-                            editor.putString("weather", weatherText);
-                            editor.apply();
-                            showWeatherInfo(weather);
-                        } else {
-                            Toast.makeText(getActivity(), "获取天气信息失败", Toast.LENGTH_LONG).show();
-                        }
-                        swipeRefreshlayout.setRefreshing(false);
-                    }
-                });
+                if (weather != null && "ok".equals(weather.status)) {
+                    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
+                    editor.putString("weather", weatherText);
+                    editor.apply();
+                    showWeatherInfo(weather);
+                } else {
+                    Toast.makeText(getActivity(), "获取天气信息失败", Toast.LENGTH_LONG).show();
+                }
+                swipeRefreshlayout.setRefreshing(false);
             }
         });
     }
+
 
     private void showWeatherInfo(Weather weather) {
         if (weather != null && "ok".equals(weather.status)) {

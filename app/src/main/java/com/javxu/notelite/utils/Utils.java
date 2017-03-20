@@ -15,10 +15,6 @@ import org.json.JSONObject;
 
 import java.io.File;
 
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-
 /**
  * Created by Jav-Xu on 2016/12/20.
  */
@@ -32,13 +28,6 @@ public class Utils {
     public static void loadImage(String s, ImageView view) {
         Glide.with(MyApplication.getContext()).load(s).placeholder(R.mipmap.ic_launcher).into(view);
     }
-
-    public static void sendOkHttpRequest(String url, Callback callback) {
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url(url).build();
-        client.newCall(request).enqueue(callback);
-    }
-
 
     /**
      * @param reponse

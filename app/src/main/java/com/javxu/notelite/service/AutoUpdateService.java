@@ -11,12 +11,10 @@ import android.preference.PreferenceManager;
 
 import com.javxu.notelite.gson.Weather;
 import com.javxu.notelite.utils.Utils;
+import com.kymjs.rxvolley.RxVolley;
+import com.kymjs.rxvolley.client.HttpCallback;
+import com.kymjs.rxvolley.http.VolleyError;
 
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 /**
  * Created by Jav-Xu on 2017/1/8.
@@ -53,15 +51,16 @@ public class AutoUpdateService extends Service {
         String weatherString = pref.getString("weather", null);
         if (weatherString != null) {
             String weatherUrl = "https://api.heweather.com/x3/weather?cityid=CN101010100&key=bc0418b57b2d4918819d3974ac1285d9";
-            Utils.sendOkHttpRequest(weatherUrl, new Callback() {
+            RxVolley.get(weatherUrl, new HttpCallback() {
                 @Override
-                public void onFailure(Call call, IOException e) {
-                    e.printStackTrace();
+                public void onFailure(VolleyError error) {
+                    super.onFailure(error);
                 }
 
                 @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    String reponseText = response.body().string();
+                public void onSuccess(String t) {
+                    super.onSuccess(t);
+                    String reponseText = t;
                     Weather weather = Utils.handleWeatherResponse(reponseText);
                     if (weather != null && "ok".equals(weather.status)) {
                         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(AutoUpdateService.this).edit();
@@ -75,15 +74,16 @@ public class AutoUpdateService extends Service {
 
     private void updateBingPicCache() {
         String requestBingPic = "http://guolin.tech/api/bing_pic";
-        Utils.sendOkHttpRequest(requestBingPic, new Callback() {
+        RxVolley.get(requestBingPic, new HttpCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
+            public void onFailure(VolleyError error) {
+                super.onFailure(error);
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String bingPicUrl = response.body().string();
+            public void onSuccess(String t) {
+                super.onSuccess(t);
+                String bingPicUrl = t;
                 SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(AutoUpdateService.this).edit();
                 editor.putString("bing_pic", bingPicUrl);
                 editor.apply();
