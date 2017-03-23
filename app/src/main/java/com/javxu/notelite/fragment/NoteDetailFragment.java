@@ -52,6 +52,8 @@ public class NoteDetailFragment extends Fragment implements View.OnClickListener
 
     public static final int REQUEST_DATE = 0;
     public static final int REQUEST_PHOTO = 1;
+    public static final int REQUEST_GALLERY = 2;
+    public static final int REQUEST_CROP = 3;
 
     private Note mNote;
     private Uri imageUri;
@@ -222,9 +224,23 @@ public class NoteDetailFragment extends Fragment implements View.OnClickListener
                     e.printStackTrace();
                     Toast.makeText(getActivity(), "预备照片文件路径出错", Toast.LENGTH_SHORT).show();
                 }
-                Intent shootIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                shootIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                startActivityForResult(shootIntent, REQUEST_PHOTO);
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("照片获取")
+                        .setItems(new String[]{"相册", "拍照"}, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case 0:
+                                        toGallery();
+                                        break;
+                                    case 1:
+                                        toCamera();
+                                        break;
+                                }
+                            }
+                        })
+                        .create()
+                        .show();
                 break;
             case R.id.detail_note_date_button:
                 FragmentManager manager = getFragmentManager();
@@ -234,6 +250,18 @@ public class NoteDetailFragment extends Fragment implements View.OnClickListener
                 break;
             default:
         }
+    }
+
+    private void toCamera() {
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        startActivityForResult(cameraIntent, REQUEST_PHOTO);
+    }
+
+    private void toGallery() {
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK);
+        galleryIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+        startActivityForResult(galleryIntent, REQUEST_GALLERY);
     }
 
     @Override
@@ -252,6 +280,15 @@ public class NoteDetailFragment extends Fragment implements View.OnClickListener
                 mNote.setNoteImagePath(String.valueOf(imageUri));
                 mNote.update(mNote.getId());
                 Utils.loadImage(mNote.getNoteImagePath(), mDetailNotePicImageView);
+                break;
+            case REQUEST_GALLERY:
+                imageUri = data.getData();
+                mNote.setNoteImagePath(String.valueOf(imageUri));
+                mNote.update(mNote.getId());
+                Utils.loadImage(mNote.getNoteImagePath(), mDetailNotePicImageView);
+                break;
+            case REQUEST_CROP:
+
                 break;
             default:
         }
