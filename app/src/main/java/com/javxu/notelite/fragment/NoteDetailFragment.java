@@ -16,7 +16,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ShareCompat;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -33,6 +32,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.javxu.notelite.R;
 import com.javxu.notelite.bean.Note;
@@ -41,6 +41,7 @@ import com.javxu.notelite.utils.Utils;
 import org.litepal.crud.DataSupport;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -210,16 +211,17 @@ public class NoteDetailFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.detail_note_shoot_fab:
-                File file = new File(mNote.getNoteImagePath());
-                if (Build.VERSION.SDK_INT >= 24) {
-                    imageUri = FileProvider.getUriForFile(getActivity(), "com.javxu.notelite", file);
-                } else {
-                    imageUri = Uri.fromFile(file);
+                try {
+                    File tempFile = new File(Utils.getExternalFileDir(),
+                            "NoteLite_IMG_" + String.valueOf(mNote.getId()) + "_" + System.currentTimeMillis() + ".jpg");
+                    tempFile.createNewFile();
+                    if (tempFile.exists()) {
+                        imageUri = Utils.getUriFromFile(getActivity(), tempFile);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getActivity(), "预备照片文件路径出错", Toast.LENGTH_SHORT).show();
                 }
-                imageUri = Uri.fromFile(new File(Utils.getExternalFileDir(),
-                        "NoteLite_IMG_" + String.valueOf(mNote.getId()) + "-" + Math.random() * 1000 + ".jpg"));
-                //mNote.setNoteImagePath(String.valueOf(imageUri));
-                //mNote.update(mNote.getId());
                 Intent shootIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 shootIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
                 startActivityForResult(shootIntent, REQUEST_PHOTO);

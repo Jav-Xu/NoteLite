@@ -1,12 +1,7 @@
 package com.javxu.notelite.bean;
 
-import android.text.TextUtils;
-
-import com.javxu.notelite.utils.Utils;
-
 import org.litepal.crud.DataSupport;
 
-import java.io.File;
 import java.util.Date;
 
 /**
@@ -46,9 +41,6 @@ public class Note extends DataSupport {
     }
 
     public String getNoteImagePath() {
-        if (TextUtils.isEmpty(noteImagePath)) {
-            return new File(Utils.getExternalFileDir(), "NoteLite_IMG_" + String.valueOf(getId()) + ".jpg").getAbsolutePath();
-        }
         return noteImagePath;
     }
 
