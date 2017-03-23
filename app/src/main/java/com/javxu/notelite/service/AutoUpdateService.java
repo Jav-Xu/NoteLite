@@ -10,6 +10,7 @@ import android.os.SystemClock;
 import android.preference.PreferenceManager;
 
 import com.javxu.notelite.gson.Weather;
+import com.javxu.notelite.utils.SharedUtil;
 import com.javxu.notelite.utils.Utils;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
@@ -63,9 +64,7 @@ public class AutoUpdateService extends Service {
                     String reponseText = t;
                     Weather weather = Utils.handleWeatherResponse(reponseText);
                     if (weather != null && "ok".equals(weather.status)) {
-                        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(AutoUpdateService.this).edit();
-                        editor.putString("weather", reponseText);
-                        editor.apply();
+                        SharedUtil.putString(getApplicationContext(), "weather", reponseText);
                     }
                 }
             });
@@ -84,9 +83,8 @@ public class AutoUpdateService extends Service {
             public void onSuccess(String t) {
                 super.onSuccess(t);
                 String bingPicUrl = t;
-                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(AutoUpdateService.this).edit();
-                editor.putString("bing_pic", bingPicUrl);
-                editor.apply();
+                SharedUtil.putString(getApplicationContext(), "bing_pic", bingPicUrl);
+
             }
         });
     }

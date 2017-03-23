@@ -2,9 +2,7 @@ package com.javxu.notelite.fragment.subfragment;
 
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -20,6 +18,7 @@ import com.javxu.notelite.R;
 import com.javxu.notelite.gson.Forecast;
 import com.javxu.notelite.gson.Weather;
 import com.javxu.notelite.service.AutoUpdateService;
+import com.javxu.notelite.utils.SharedUtil;
 import com.javxu.notelite.utils.StaticClass;
 import com.javxu.notelite.utils.Utils;
 import com.kymjs.rxvolley.RxVolley;
@@ -29,7 +28,7 @@ import com.kymjs.rxvolley.http.VolleyError;
 public class WeatherFragment extends Fragment {
 
     private ImageView bingPicImg;
-    public SwipeRefreshLayout swipeRefreshlayout;
+    private SwipeRefreshLayout swipeRefreshlayout;
     private NestedScrollView weatherLayout;
     private TextView titleCity;
     private TextView titleUpdateTime;
@@ -66,14 +65,13 @@ public class WeatherFragment extends Fragment {
         carWashText = (TextView) view.findViewById(R.id.car_wash_text);
         sportText = (TextView) view.findViewById(R.id.sport_text);
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String bingPic = preferences.getString("bing_pic", null);
+        String bingPic = SharedUtil.getString(getActivity(), "bing_pic", null);
         if (bingPic != null) {
             Utils.loadImage(bingPic, bingPicImg);
         } else {
             loadBingPic();
         }
-        String weatherString = preferences.getString("weather", null);
+        String weatherString = SharedUtil.getString(getActivity(), "weather", null);
         if (weatherString != null) {
             Weather weather = Utils.handleWeatherResponse(weatherString);
             showWeatherInfo(weather);
@@ -99,10 +97,8 @@ public class WeatherFragment extends Fragment {
             public void onSuccess(String t) {
                 super.onSuccess(t);
                 final String bingPicUrl = t;
-                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
-                editor.putString("bing_pic", bingPicUrl);
-                editor.apply();
-                Utils.loadImage(bingPicUrl,bingPicImg);
+                SharedUtil.putString(getActivity(), "bing_pic", bingPicUrl);
+                Utils.loadImage(bingPicUrl, bingPicImg);
             }
 
             @Override
@@ -128,9 +124,7 @@ public class WeatherFragment extends Fragment {
                 final String weatherText = t;
                 final Weather weather = Utils.handleWeatherResponse(weatherText);
                 if (weather != null && "ok".equals(weather.status)) {
-                    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
-                    editor.putString("weather", weatherText);
-                    editor.apply();
+                    SharedUtil.putString(getActivity(), "weather", weatherText);
                     showWeatherInfo(weather);
                 } else {
                     Toast.makeText(getActivity(), "获取天气信息失败", Toast.LENGTH_LONG).show();
