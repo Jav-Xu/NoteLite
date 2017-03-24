@@ -131,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.setAdapter(mHomeFragmentAdapter);
         mTabLayout.setupWithViewPager(mViewPager); // 将TabLayout和ViewPager关联起来。
         mViewPager.setCurrentItem(0);
+        mViewPager.setOffscreenPageLimit(3);
     }
 
 

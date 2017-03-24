@@ -33,6 +33,8 @@ public class WeChatFragment extends Fragment {
     private List<WeChat> mWeChatList = new ArrayList<>();
     private WeChatAdapter mWeChatAdapter;
 
+    private int page = 1; //微信精选页码，首次默认加载第一页
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +44,7 @@ public class WeChatFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wechat, container, false);
         initView(view);
-        initData();
+        initData(page);
         return view;
     }
 
@@ -54,13 +56,13 @@ public class WeChatFragment extends Fragment {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                initData();
+                initData(++page); //不合适，应该在请求成功后再加，或者在失败后减一
             }
         });
     }
 
-    private void initData() {
-        String url = "http://v.juhe.cn/weixin/query?key=" + StaticClass.WeChat_Key;
+    private void initData(int page) {
+        String url = "http://v.juhe.cn/weixin/query?pno=" + page + "&key=" + StaticClass.WeChat_Key;
         RxVolley.get(url, new HttpCallback() {
             @Override
             public void onFailure(VolleyError error) {
@@ -89,7 +91,7 @@ public class WeChatFragment extends Fragment {
                 data.setSource(news.getString("source"));
                 data.setFirstImg(news.getString("firstImg"));
                 data.setNewsUrl(news.getString("url"));
-                mWeChatList.add(data);
+                mWeChatList.add(0, data);
                 mWeChatAdapter = new WeChatAdapter(getActivity(), mWeChatList);
                 mWeChatAdapter.notifyDataSetChanged();
                 RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
