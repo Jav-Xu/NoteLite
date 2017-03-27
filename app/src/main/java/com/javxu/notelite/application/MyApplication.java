@@ -3,6 +3,9 @@ package com.javxu.notelite.application;
 import android.app.Application;
 import android.content.Context;
 
+import com.javxu.notelite.utils.StaticClass;
+import com.tencent.bugly.crashreport.CrashReport;
+
 import org.litepal.LitePal;
 
 /**
@@ -17,6 +20,7 @@ public class MyApplication extends Application {
         super.onCreate();
         context = getApplicationContext();
         LitePal.initialize(context);
+        CrashReport.initCrashReport(getApplicationContext(), StaticClass.BUGLY_Key, true);
     }
 
     public static Context getContext() {
