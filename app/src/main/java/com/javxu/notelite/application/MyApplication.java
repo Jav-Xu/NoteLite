@@ -8,6 +8,8 @@ import com.tencent.bugly.crashreport.CrashReport;
 
 import org.litepal.LitePal;
 
+import cn.bmob.v3.Bmob;
+
 /**
  * Created by Jav-Xu on 2017/1/8.
  */
@@ -21,6 +23,7 @@ public class MyApplication extends Application {
         context = getApplicationContext();
         LitePal.initialize(context);
         CrashReport.initCrashReport(getApplicationContext(), StaticClass.BUGLY_Key, true);
+        Bmob.initialize(this, StaticClass.BMOB_Key);
     }
 
     public static Context getContext() {
