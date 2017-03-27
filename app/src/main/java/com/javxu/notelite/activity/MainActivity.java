@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViewPager() {
-        String[] titles = {"笔记列表", "今日天气", "微信精选"};
+        String[] titles = {"笔记列表", "今日天气", "微信精选","美图欣赏"};
         mHomeFragmentAdapter = new HomeFragmentApater(getSupportFragmentManager(), Arrays.asList(titles));
         mViewPager.setAdapter(mHomeFragmentAdapter);
         mTabLayout.setupWithViewPager(mViewPager); // 将TabLayout和ViewPager关联起来。
