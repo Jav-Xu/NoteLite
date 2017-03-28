@@ -38,4 +38,10 @@
     <string name="text_now_password">当前密码</string>
     <string name="text_new_password">新密码</string>
     <string name="text_find_password">找回密码</string>
+    <string name="text_profile_edit">编辑资料</string>
+    <string name="text_profile_name">姓名：</string>
+    <string name="text_profile_sex">性别：</string>
+    <string name="text_profile_age">年龄：</string>
+    <string name="text_profile_desc">简介：</string>
+    <string name="text_profile_exit">退出登录</string>
 </resources>

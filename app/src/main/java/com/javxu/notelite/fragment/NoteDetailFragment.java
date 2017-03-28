@@ -169,7 +169,7 @@ public class NoteDetailFragment extends Fragment implements View.OnClickListener
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         menu.clear();
-        inflater.inflate(R.menu.note_detail_toolbar, menu);
+        inflater.inflate(R.menu.toolbar_notedetail, menu);
     }
 
     @Override

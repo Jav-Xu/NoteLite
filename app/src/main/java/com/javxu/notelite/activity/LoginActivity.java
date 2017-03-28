@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.javxu.notelite.R;
 import com.javxu.notelite.bean.MyUser;
@@ -84,11 +83,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void infoConfim() {
 
-        mMyDialog  = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+        mMyDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
         mMyDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
         mMyDialog.setTitleText("Loading");
         mMyDialog.setCancelable(false);
-        mMyDialog.show();
 
         username = et_login_username.getText().toString().trim();
         password = et_login_password.getText().toString().trim();
@@ -104,24 +102,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             user.login(new SaveListener<MyUser>() {
                 @Override
                 public void done(MyUser myUser, BmobException e) {
-
-                    mMyDialog.dismiss();
-
                     if (e == null) {
                         if (user.getEmailVerified()) { // 再判断邮箱是否验证成功
-                            Toast.makeText(LoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
+                            mMyDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                            mMyDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                            mMyDialog.setTitleText("登陆成功");
+                            mMyDialog.dismiss();
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             finish();
                         } else {
-                            Toast.makeText(LoginActivity.this, "请前往邮箱验证再来登陆 " + e.toString(), Toast.LENGTH_LONG).show();
+                            mMyDialog.changeAlertType(SweetAlertDialog.WARNING_TYPE);
+                            mMyDialog.setTitleText("请前往邮箱验证再来登陆");
                         }
                     } else {
-                        Toast.makeText(LoginActivity.this, "登陆失败 " + e.toString(), Toast.LENGTH_LONG).show();
+                        mMyDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE);
+                        mMyDialog.setTitleText("登陆失败" + e.toString());
                     }
                 }
             });
         } else {
-            Toast.makeText(LoginActivity.this, getString(R.string.text_no_empty), Toast.LENGTH_SHORT).show();
+            mMyDialog.changeAlertType(SweetAlertDialog.WARNING_TYPE);
+            mMyDialog.setTitleText(getString(R.string.text_no_empty));
         }
     }
 

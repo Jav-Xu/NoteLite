@@ -7,29 +7,29 @@
             android:icon="@drawable/ic_list"
             android:title="List"/>
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_gallery"
-            android:title="Gallery"/>
+            android:id="@+id/nav_tools"
+            android:icon="@drawable/ic_tools"
+            android:title="Tools"/>
         <item
             android:id="@+id/nav_trash"
             android:icon="@drawable/ic_trash"
             android:title="Trash"/>
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="More">
         <menu>
             <item
-                android:id="@+id/nav_author"
+                android:id="@+id/nav_user"
                 android:icon="@drawable/ic_author"
-                android:title="Author"/>
+                android:title="User"/>
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_share"
                 android:title="Share"/>
             <item
-                android:id="@+id/nav_encourage"
-                android:icon="@drawable/ic_encourage"
-                android:title="Encourage"/>
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_settings"
+                android:title="Settings"/>
         </menu>
     </item>
 

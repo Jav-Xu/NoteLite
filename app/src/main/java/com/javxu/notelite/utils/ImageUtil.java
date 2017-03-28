@@ -10,7 +10,11 @@ import com.javxu.notelite.R;
 import com.javxu.notelite.application.MyApplication;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * Project Name:  NoteLite
@@ -60,5 +64,17 @@ public class ImageUtil {
     public static Bitmap base64ToBitmap(String base64Data) {
         byte[] bytes = Base64.decode(base64Data, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+    }
+
+    public static boolean saveBitmapTofile(Bitmap bmp, File filename) {
+        Bitmap.CompressFormat format = Bitmap.CompressFormat.JPEG;
+        int quality = 100;
+        OutputStream stream = null;
+        try {
+            stream = new FileOutputStream(filename);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return bmp.compress(format, quality, stream);
     }
 }
