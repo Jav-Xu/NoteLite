@@ -30,13 +30,13 @@
                 android:fitsSystemWindows="true"
                 android:orientation="vertical">
 
-                <include layout="@layout/title"/>
+                <include layout="@layout/view_title"/>
 
-                <include layout="@layout/forecast"/>
+                <include layout="@layout/view_forecast"/>
 
-                <include layout="@layout/aqi"/>
+                <include layout="@layout/view_aqi"/>
 
-                <include layout="@layout/suggestion"/>
+                <include layout="@layout/view_suggestion"/>
             </LinearLayout>
 
         </android.support.v4.widget.NestedScrollView>

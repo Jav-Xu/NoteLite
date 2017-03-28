@@ -32,7 +32,7 @@ public class NoteListFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_note_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_notelist, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         mNoteAdapter = new NoteAdapter(getActivity(), mNotes);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());

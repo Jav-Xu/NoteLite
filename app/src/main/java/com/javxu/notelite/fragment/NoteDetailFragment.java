@@ -86,7 +86,7 @@ public class NoteDetailFragment extends Fragment implements View.OnClickListener
             getActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
 
-        View view = inflater.inflate(R.layout.fragment_note_detail, container, false);
+        View view = inflater.inflate(R.layout.fragment_notedetail, container, false);
 
         int noteId = getArguments().getInt("NOTEID");
         List<Note> notes = DataSupport.where("id = ?", String.valueOf(noteId)).find(Note.class);

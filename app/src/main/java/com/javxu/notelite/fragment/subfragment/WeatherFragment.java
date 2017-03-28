@@ -151,7 +151,7 @@ public class WeatherFragment extends Fragment {
 
             for (Forecast forecast : weather.forecastList) {
 
-                View view = LayoutInflater.from(getActivity()).inflate(R.layout.forecast_item, forecastLayout, false);
+                View view = LayoutInflater.from(getActivity()).inflate(R.layout.item_forecast, forecastLayout, false);
 
                 TextView dateText = (TextView) view.findViewById(R.id.date_text);
                 TextView infoText = (TextView) view.findViewById(R.id.info_text);
