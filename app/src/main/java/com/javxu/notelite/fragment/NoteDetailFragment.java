@@ -36,7 +36,8 @@ import android.widget.Toast;
 
 import com.javxu.notelite.R;
 import com.javxu.notelite.bean.Note;
-import com.javxu.notelite.utils.Utils;
+import com.javxu.notelite.utils.FileUtil;
+import com.javxu.notelite.utils.ImageUtil;
 
 import org.litepal.crud.DataSupport;
 
@@ -103,7 +104,7 @@ public class NoteDetailFragment extends Fragment implements View.OnClickListener
         mDetailNoteSolvedCheckBox = (CheckBox) view.findViewById(R.id.detail_note_solved_check_box);
 
         mCollapsingToolbarLayout.setTitle(mNote.getNoteTitle());
-        Utils.loadImage(mNote.getNoteImagePath(), mDetailNotePicImageView);
+        ImageUtil.loadImage(mNote.getNoteImagePath(), mDetailNotePicImageView);
         mDetailNoteTitleEditText.setText(mNote.getNoteTitle());
         mDetailNoteTitleEditText.setSelection(mNote.getNoteTitle().length());
         mDetailNoteDateButton.setText(mNote.getNoteDate().toString());
@@ -214,11 +215,11 @@ public class NoteDetailFragment extends Fragment implements View.OnClickListener
         switch (v.getId()) {
             case R.id.detail_note_shoot_fab:
                 try {
-                    File tempFile = new File(Utils.getExternalFileDir(),
+                    File tempFile = new File(FileUtil.getExternalPicturesFileDir(),
                             "NoteLite_IMG_" + String.valueOf(mNote.getId()) + "_" + System.currentTimeMillis() + ".jpg");
                     tempFile.createNewFile();
                     if (tempFile.exists()) {
-                        imageUri = Utils.getUriFromFile(getActivity(), tempFile);
+                        imageUri = FileUtil.getUriFromFile(getActivity(), tempFile);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -279,13 +280,13 @@ public class NoteDetailFragment extends Fragment implements View.OnClickListener
             case REQUEST_PHOTO:
                 mNote.setNoteImagePath(String.valueOf(imageUri));
                 mNote.update(mNote.getId());
-                Utils.loadImage(mNote.getNoteImagePath(), mDetailNotePicImageView);
+                ImageUtil.loadImage(mNote.getNoteImagePath(), mDetailNotePicImageView);
                 break;
             case REQUEST_GALLERY:
                 imageUri = data.getData();
                 mNote.setNoteImagePath(String.valueOf(imageUri));
                 mNote.update(mNote.getId());
-                Utils.loadImage(mNote.getNoteImagePath(), mDetailNotePicImageView);
+                ImageUtil.loadImage(mNote.getNoteImagePath(), mDetailNotePicImageView);
                 break;
             case REQUEST_CROP:
 

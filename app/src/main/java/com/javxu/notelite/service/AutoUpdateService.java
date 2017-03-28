@@ -10,8 +10,8 @@ import android.os.SystemClock;
 import android.preference.PreferenceManager;
 
 import com.javxu.notelite.gson.Weather;
+import com.javxu.notelite.utils.JSONUtil;
 import com.javxu.notelite.utils.SharedUtil;
-import com.javxu.notelite.utils.Utils;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.http.VolleyError;
@@ -62,7 +62,7 @@ public class AutoUpdateService extends Service {
                 public void onSuccess(String t) {
                     super.onSuccess(t);
                     String reponseText = t;
-                    Weather weather = Utils.handleWeatherResponse(reponseText);
+                    Weather weather = JSONUtil.handleWeatherResponse(reponseText);
                     if (weather != null && "ok".equals(weather.status)) {
                         SharedUtil.putString(getApplicationContext(), "weather", reponseText);
                     }

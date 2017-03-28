@@ -5,13 +5,13 @@ import android.util.Log;
 /**
  * Project Name:  NoteLite
  * Package Name:  com.javxu.notelite.utils
- * File Name:     Loog
+ * File Name:     LoogUtil
  * Creator:       Jav-Xu
  * Create Time:   2017/3/20 11:48
  * Description:   TODO
  */
 
-public class Loog {
+public class LoogUtil {
     //DEBUG 开关
     public static final boolean DEBUG = true;
 

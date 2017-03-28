@@ -18,9 +18,10 @@ import com.javxu.notelite.R;
 import com.javxu.notelite.gson.Forecast;
 import com.javxu.notelite.gson.Weather;
 import com.javxu.notelite.service.AutoUpdateService;
+import com.javxu.notelite.utils.ImageUtil;
+import com.javxu.notelite.utils.JSONUtil;
 import com.javxu.notelite.utils.SharedUtil;
-import com.javxu.notelite.utils.StaticClass;
-import com.javxu.notelite.utils.Utils;
+import com.javxu.notelite.utils.StaticUtil;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.http.VolleyError;
@@ -67,13 +68,13 @@ public class WeatherFragment extends Fragment {
 
         String bingPic = SharedUtil.getString(getActivity(), "bing_pic", null);
         if (bingPic != null) {
-            Utils.loadImage(bingPic, bingPicImg);
+            ImageUtil.loadImage(bingPic, bingPicImg);
         } else {
             loadBingPic();
         }
         String weatherString = SharedUtil.getString(getActivity(), "weather", null);
         if (weatherString != null) {
-            Weather weather = Utils.handleWeatherResponse(weatherString);
+            Weather weather = JSONUtil.handleWeatherResponse(weatherString);
             showWeatherInfo(weather);
         } else {
             weatherLayout.setVisibility(View.INVISIBLE);
@@ -98,7 +99,7 @@ public class WeatherFragment extends Fragment {
                 super.onSuccess(t);
                 final String bingPicUrl = t;
                 SharedUtil.putString(getActivity(), "bing_pic", bingPicUrl);
-                Utils.loadImage(bingPicUrl, bingPicImg);
+                ImageUtil.loadImage(bingPicUrl, bingPicImg);
             }
 
             @Override
@@ -109,7 +110,7 @@ public class WeatherFragment extends Fragment {
     }
 
     public void requestBJWeather() {
-        String weatherUrl = StaticClass.BJWEATHER;
+        String weatherUrl = StaticUtil.BJWEATHER;
         RxVolley.get(weatherUrl, new HttpCallback() {
             @Override
             public void onFailure(VolleyError error) {
@@ -122,7 +123,7 @@ public class WeatherFragment extends Fragment {
             public void onSuccess(String t) {
                 super.onSuccess(t);
                 final String weatherText = t;
-                final Weather weather = Utils.handleWeatherResponse(weatherText);
+                final Weather weather = JSONUtil.handleWeatherResponse(weatherText);
                 if (weather != null && "ok".equals(weather.status)) {
                     SharedUtil.putString(getActivity(), "weather", weatherText);
                     showWeatherInfo(weather);

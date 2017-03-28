@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.javxu.notelite.R;
 import com.javxu.notelite.bean.MyUser;
 import com.javxu.notelite.utils.SharedUtil;
-import com.javxu.notelite.utils.StaticClass;
+import com.javxu.notelite.utils.StaticUtil;
 
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
@@ -57,11 +57,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void initData() {
-        isKeep = SharedUtil.getBoolean(this, StaticClass.SHARE_IS_KEEP, false);
+        isKeep = SharedUtil.getBoolean(this, StaticUtil.SHARE_IS_KEEP, false);
         if (isKeep) {
             mKeepPassWord.setChecked(true);
-            username = SharedUtil.getString(this, StaticClass.SHARE_LAST_USERNAME, "");
-            password = SharedUtil.getString(this, StaticClass.SHARE_LAST_PASSWORD, "");
+            username = SharedUtil.getString(this, StaticUtil.SHARE_LAST_USERNAME, "");
+            password = SharedUtil.getString(this, StaticUtil.SHARE_LAST_PASSWORD, "");
             et_login_username.setText(username);
             et_login_password.setText(password);
         }
@@ -130,13 +130,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onDestroy();
         boolean isKeep = mKeepPassWord.isChecked();
         if (isKeep) {
-            SharedUtil.putBoolean(this, StaticClass.SHARE_IS_KEEP, true);
-            SharedUtil.putString(this, StaticClass.SHARE_LAST_USERNAME, username);
-            SharedUtil.putString(this, StaticClass.SHARE_LAST_PASSWORD, password);
+            SharedUtil.putBoolean(this, StaticUtil.SHARE_IS_KEEP, true);
+            SharedUtil.putString(this, StaticUtil.SHARE_LAST_USERNAME, username);
+            SharedUtil.putString(this, StaticUtil.SHARE_LAST_PASSWORD, password);
         } else {
-            SharedUtil.deleteItem(this, StaticClass.SHARE_IS_KEEP);
-            SharedUtil.deleteItem(this, StaticClass.SHARE_LAST_USERNAME);
-            SharedUtil.deleteItem(this, StaticClass.SHARE_LAST_PASSWORD);
+            SharedUtil.deleteItem(this, StaticUtil.SHARE_IS_KEEP);
+            SharedUtil.deleteItem(this, StaticUtil.SHARE_LAST_USERNAME);
+            SharedUtil.deleteItem(this, StaticUtil.SHARE_LAST_PASSWORD);
         }
     }
 }

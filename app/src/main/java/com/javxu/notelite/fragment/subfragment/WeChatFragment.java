@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.javxu.notelite.R;
 import com.javxu.notelite.adapter.WeChatAdapter;
 import com.javxu.notelite.bean.WeChat;
-import com.javxu.notelite.utils.StaticClass;
+import com.javxu.notelite.utils.StaticUtil;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.http.VolleyError;
@@ -62,7 +62,7 @@ public class WeChatFragment extends Fragment {
     }
 
     private void initData(int page) {
-        String url = "http://v.juhe.cn/weixin/query?pno=" + page + "&key=" + StaticClass.WeChat_Key;
+        String url = "http://v.juhe.cn/weixin/query?pno=" + page + "&key=" + StaticUtil.WeChat_Key;
         RxVolley.get(url, new HttpCallback() {
             @Override
             public void onFailure(VolleyError error) {

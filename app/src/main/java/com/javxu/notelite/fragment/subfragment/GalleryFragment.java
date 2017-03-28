@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.javxu.notelite.R;
 import com.javxu.notelite.adapter.PhotoAdapter;
-import com.javxu.notelite.utils.StaticClass;
+import com.javxu.notelite.utils.StaticUtil;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.http.VolleyError;
@@ -44,7 +44,7 @@ public class GalleryFragment extends Fragment {
     }
 
     private void initData() {
-        RxVolley.get(StaticClass.GALLERY_URL, new HttpCallback() {
+        RxVolley.get(StaticUtil.GALLERY_URL, new HttpCallback() {
             @Override
             public void onSuccess(String t) {
                 super.onSuccess(t);
