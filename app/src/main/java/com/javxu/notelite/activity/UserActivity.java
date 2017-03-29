@@ -194,7 +194,7 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initImageFileAndUri() {
-        mImageFile = new File(FileUtil.getExternalPicturesFileDir(), "NaiveTemp_" + System.currentTimeMillis() + ".jpg");
+        mImageFile = new File(FileUtil.getExternalPicturesFileDir(), "NoteLite_UserAvaTemp_" + System.currentTimeMillis() + ".jpg");
         try {
             mImageFile.createNewFile();
             mImageUri = FileUtil.getUriFromFile(this, mImageFile);

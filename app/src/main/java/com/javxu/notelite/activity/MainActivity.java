@@ -52,6 +52,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initData();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initData();
+    }
+
     private void initView() {
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
