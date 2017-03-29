@@ -1,4 +1,4 @@
-package com.javxu.notelite.fragment.subfragment;
+package com.javxu.notelite.subfragment;
 
 
 import android.content.Intent;

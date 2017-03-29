@@ -4,10 +4,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.javxu.notelite.fragment.subfragment.GalleryFragment;
-import com.javxu.notelite.fragment.subfragment.NoteListFragment;
-import com.javxu.notelite.fragment.subfragment.WeChatFragment;
-import com.javxu.notelite.fragment.subfragment.WeatherFragment;
+import com.javxu.notelite.subfragment.GalleryFragment;
+import com.javxu.notelite.subfragment.NoteListFragment;
+import com.javxu.notelite.subfragment.WeChatFragment;
+import com.javxu.notelite.subfragment.WeatherFragment;
 
 import java.util.List;
 
