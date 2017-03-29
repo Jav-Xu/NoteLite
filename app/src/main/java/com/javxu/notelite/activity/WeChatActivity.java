@@ -2,18 +2,19 @@ package com.javxu.notelite.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
-import android.widget.ProgressBar;
 
 import com.javxu.notelite.R;
 import com.javxu.notelite.bean.WeChat;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class WeChatActivity extends BackActivity {
 
-    private ProgressBar mProgressBar;
+    private SweetAlertDialog mMyDialog;
     private WebView mWebView;
 
     public static Intent getIntent(Context context, WeChat weChat) {
@@ -32,7 +33,11 @@ public class WeChatActivity extends BackActivity {
     }
 
     private void initView() {
-        mProgressBar = (ProgressBar) findViewById(R.id.pb_wechats);
+        mMyDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+        mMyDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        mMyDialog.setTitleText("Loading");
+        mMyDialog.setCancelable(false);
+        mMyDialog.show();
         mWebView = (WebView) findViewById(R.id.wv_wechat);
     }
 
@@ -71,9 +76,14 @@ public class WeChatActivity extends BackActivity {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
             if (newProgress == 100) {
-                mProgressBar.setVisibility(View.GONE);
+                mMyDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                mMyDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                mMyDialog.setTitleText("文章加载成功");
+                mMyDialog.dismiss();
             }
             super.onProgressChanged(view, newProgress);
         }
+
+
     }
 }

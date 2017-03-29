@@ -3,6 +3,8 @@ package com.javxu.notelite.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -34,6 +36,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private String password;
 
     private SweetAlertDialog mMyDialog;
+    private static final int DELAY = 404;
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case DELAY:
+                    mMyDialog.dismiss();
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,9 +120,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (e == null) {
                         if (user.getEmailVerified()) { // 再判断邮箱是否验证成功
                             mMyDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
-                            mMyDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-                            mMyDialog.setTitleText("登陆成功");
-                            mMyDialog.dismiss();
+                            mMyDialog.setTitleText("登录成功");
+                            mHandler.sendEmptyMessageDelayed(DELAY, 1000);
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             finish();
                         } else {
@@ -116,7 +130,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         }
                     } else {
                         mMyDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE);
-                        mMyDialog.setTitleText("登陆失败" + e.toString());
+                        mMyDialog.setTitleText("登陆失败：" + e.toString());
                     }
                 }
             });

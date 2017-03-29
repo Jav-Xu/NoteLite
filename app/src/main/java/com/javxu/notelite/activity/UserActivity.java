@@ -4,8 +4,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -32,6 +35,7 @@ import java.io.FileNotFoundException;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserActivity extends AppCompatActivity implements View.OnClickListener {
@@ -55,6 +59,21 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
 
     private Bitmap mAvatarBitmap; //裁剪后的头像文件
 
+    private SweetAlertDialog mMyDialog;
+
+    private static final int DELAY = 404;
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case DELAY:
+                    mMyDialog.dismiss();
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -247,6 +266,11 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
 
     private void profileUpdate() {
 
+        mMyDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+        mMyDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        mMyDialog.setTitleText("用户信息更新中");
+        mMyDialog.setCancelable(false);
+
         String name_new = et_profile_name.getText().toString().trim();
         String age_new = et_profile_age.getText().toString().trim();
         String sex_new = et_profile_sex.getText().toString().trim();
@@ -261,6 +285,8 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
                 desc_new = "Too lazy to edit...";
             }
 
+            mMyDialog.show();
+
             MyUser newUser = new MyUser();
             newUser.setUsername(name_new);
             newUser.setAge(Integer.parseInt(age_new));
@@ -274,14 +300,18 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
                 public void done(BmobException e) {
                     if (e == null) {
                         setEditEnable(false);
-                        Toast.makeText(UserActivity.this, "更新用户信息成功", Toast.LENGTH_SHORT).show();
+                        mMyDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                        mMyDialog.setTitleText("用户信息更新成功");
+                        mHandler.sendEmptyMessageDelayed(DELAY, 1000);
                     } else {
-                        Toast.makeText(UserActivity.this, "更新用户信息失败:" + e.getMessage(), Toast.LENGTH_LONG).show();
+                        mMyDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE);
+                        mMyDialog.setTitleText("用户信息更新失败：" + e.toString());
                     }
                 }
             });
         } else {
-            Toast.makeText(UserActivity.this, "必需信息不能为空", Toast.LENGTH_SHORT).show();
+            mMyDialog.changeAlertType(SweetAlertDialog.WARNING_TYPE);
+            mMyDialog.setTitleText(getString(R.string.text_no_empty));
         }
     }
 }
