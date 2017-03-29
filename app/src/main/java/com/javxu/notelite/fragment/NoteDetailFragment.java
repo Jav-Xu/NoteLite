@@ -57,7 +57,8 @@ public class NoteDetailFragment extends Fragment implements View.OnClickListener
     public static final int REQUEST_CROP = 3;
 
     private Note mNote;
-    private Uri imageUri;
+    private File mImageFile; // Note相片文件
+    private Uri mImageUri; // Note相片的Uri
 
     private Toolbar toolbar;
     private ImageView mDetailNotePicImageView;
@@ -214,17 +215,6 @@ public class NoteDetailFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.detail_note_shoot_fab:
-                try {
-                    File tempFile = new File(FileUtil.getExternalPicturesFileDir(),
-                            "NoteLite_IMG_" + String.valueOf(mNote.getId()) + "_" + System.currentTimeMillis() + ".jpg");
-                    tempFile.createNewFile();
-                    if (tempFile.exists()) {
-                        imageUri = FileUtil.getUriFromFile(getActivity(), tempFile);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getActivity(), "预备照片文件路径出错", Toast.LENGTH_SHORT).show();
-                }
                 new AlertDialog.Builder(getActivity())
                         .setTitle("照片获取")
                         .setItems(new String[]{"相册", "拍照"}, new DialogInterface.OnClickListener() {
@@ -253,43 +243,91 @@ public class NoteDetailFragment extends Fragment implements View.OnClickListener
         }
     }
 
+    private boolean initImageFileAndUri() {
+        boolean flag = false;
+        try {
+            mImageFile = new File(FileUtil.getExternalPicturesFileDir(),
+                    "NoteLite_IMG_" + String.valueOf(mNote.getId()) + "_" + System.currentTimeMillis() + ".jpg");
+            mImageFile.createNewFile();
+            if (mImageFile.exists()) {
+                mImageUri = FileUtil.getUriFromFile(getActivity(), mImageFile);
+                flag = true;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(getActivity(), "预备照片文件路径出错", Toast.LENGTH_SHORT).show();
+        }
+        return flag;
+    }
+
     private void toCamera() {
-        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-        startActivityForResult(cameraIntent, REQUEST_PHOTO);
+        if (initImageFileAndUri()) {
+            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
+            cameraIntent.putExtra("return-data", false); // 设置是否在 onActivityResult 方法的 intent 值中返回 Bitmap 缩略图对象
+            startActivityForResult(cameraIntent, REQUEST_PHOTO);
+        }
     }
 
     private void toGallery() {
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK);
-        galleryIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-        startActivityForResult(galleryIntent, REQUEST_GALLERY);
+        if (initImageFileAndUri()) {
+            Intent galleryIntent = new Intent(Intent.ACTION_PICK);
+            galleryIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+            galleryIntent.putExtra("return-data", false); // 设置是否在 onActivityResult 方法的 intent 值中返回 Bitmap 缩略图对象
+            startActivityForResult(galleryIntent, REQUEST_GALLERY);
+        }
+    }
+
+    private void toCrop(Uri uri) {
+        if (uri == null) {
+            return;
+        }
+        Intent cropIntent = new Intent("com.android.camera.action.CROP");
+        cropIntent.setDataAndType(uri, "image/*");
+        cropIntent.putExtra("crop", "true");//设置裁剪
+        cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri); // 设置是否将裁剪结果保存到指定文件中，这里直接在原图上裁剪覆盖操作
+        cropIntent.putExtra("return-data", false); // 设置是否在 onActivityResult 方法的 intent 值中返回 Bitmap 缩略图对象
+        startActivityForResult(cropIntent, REQUEST_CROP);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != Activity.RESULT_OK) {
-            return;
-        }
         switch (requestCode) {
             case REQUEST_DATE:
+                if (data == null) {
+                    return;
+                }
                 Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
                 mDetailNoteDateButton.setText(date.toString());
                 mNote.setNoteDate(date);
                 mNote.update(mNote.getId());
                 break;
             case REQUEST_PHOTO:
-                mNote.setNoteImagePath(String.valueOf(imageUri));
-                mNote.update(mNote.getId());
-                ImageUtil.loadImage(mNote.getNoteImagePath(), mDetailNotePicImageView);
+                if (resultCode != Activity.RESULT_OK) {
+                    mImageFile.delete();
+                    return;
+                }
+                //Uri photoUri = data.getData(); //空指针
+                Uri photoUri = mImageUri;
+                toCrop(photoUri);
                 break;
             case REQUEST_GALLERY:
-                imageUri = data.getData();
-                mNote.setNoteImagePath(String.valueOf(imageUri));
-                mNote.update(mNote.getId());
-                ImageUtil.loadImage(mNote.getNoteImagePath(), mDetailNotePicImageView);
+                // 这里要注意，不同版本手机 返回data取出照片实际路径方法不一样，这里都给了 crop 处理
+                if (resultCode != Activity.RESULT_OK) {
+                    mImageFile.delete();
+                    return;
+                }
+                Uri galleryUri = data.getData();
+                toCrop(galleryUri);
                 break;
             case REQUEST_CROP:
-
+                if (resultCode != Activity.RESULT_OK) {
+                    mImageFile.delete();
+                    return;
+                }
+                mNote.setNoteImagePath(mImageUri.getPath()); //String.valueOf(mImageUri)) 返回会加上 file:///stroage/sdcard...
+                mNote.update(mNote.getId());
+                ImageUtil.loadImage(mNote.getNoteImagePath(), mDetailNotePicImageView);
                 break;
             default:
         }
