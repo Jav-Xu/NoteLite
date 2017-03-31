@@ -50,6 +50,10 @@
             android:label="Profile"
             android:theme="@style/AppTheme">
         </activity>
+        <activity
+            android:name=".activity.WeChatActivity"
+            android:theme="@style/AppTheme">
+        </activity>
         <!--AppTheme(NoActionBar)-->
 
 
@@ -62,18 +66,14 @@
             android:name=".activity.ForgetActivity"
             android:theme="@style/BackActivityTheme">
         </activity>
-        <activity
-            android:name=".activity.WeChatActivity"
-            android:theme="@style/BackActivityTheme">
-        </activity>
         <!--BackActivityTheme-->
 
 
-        <!--根据版本不同对Theme有默认无ActionBar和透明状态栏之分-->
+        <!--根据版本不同对Theme有默认AppTheme和透明状态栏Theme之分-->
         <activity
             android:name=".activity.NoteDetailActivity"
             android:parentActivityName=".activity.MainActivity"
-            android:theme="@style/NoteDetailActivityTheme">
+            android:theme="@style/TransparentBarActivityTheme">
         </activity>
 
 

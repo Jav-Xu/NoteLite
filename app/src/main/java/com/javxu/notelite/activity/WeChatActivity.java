@@ -4,19 +4,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
 import com.javxu.notelite.R;
-import com.javxu.notelite.base.BackActivity;
 import com.javxu.notelite.bean.WeChat;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class WeChatActivity extends BackActivity {
+public class WeChatActivity extends AppCompatActivity  {
 
     private SweetAlertDialog mMyDialog;
     private WebView mWebView;
+    private Toolbar tb_wechat;
 
     public static Intent getIntent(Context context, WeChat weChat) {
         Intent intent = new Intent(context, WeChatActivity.class);
@@ -34,6 +39,14 @@ public class WeChatActivity extends BackActivity {
     }
 
     private void initView() {
+
+        tb_wechat = (Toolbar) findViewById(R.id.toolbar_wechat);
+        setSupportActionBar(tb_wechat);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
         mMyDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
         mMyDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
         mMyDialog.setTitleText("Loading");
@@ -69,6 +82,25 @@ public class WeChatActivity extends BackActivity {
                 return true; //我接受这个事件
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_wechat, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+            case R.id.share:
+                //TODO
+                break;
+        }
+        return true;
     }
 
     public class WebViewClient extends WebChromeClient {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="NoteDetailActivityTheme" parent="AppTheme">
+    <style name="TransparentBarActivityTheme" parent="AppTheme">
         <item name="android:startColor">@android:color/transparent</item>
     </style>
 
