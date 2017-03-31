@@ -28,7 +28,10 @@ import java.io.OutputStream;
 public class ImageUtil {
 
     public static void loadImage(String s, ImageView view) {
-        Glide.with(MyApplication.getContext()).load(s).placeholder(R.mipmap.ic_launcher).into(view);
+        Glide.with(MyApplication.getContext()).load(s).
+                placeholder(R.mipmap.ic_launcher)
+                .error(R.mipmap.ic_launcher)
+                .into(view);
     }
 
     public static String bitmapToBase64(Bitmap bitmap) {

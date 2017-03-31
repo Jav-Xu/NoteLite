@@ -45,6 +45,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             switch (msg.what) {
                 case DELAY:
                     mMyDialog.dismiss();
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish();
                     break;
             }
         }
@@ -121,9 +123,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if (user.getEmailVerified()) { // 再判断邮箱是否验证成功
                             mMyDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                             mMyDialog.setTitleText("登录成功");
-                            mHandler.sendEmptyMessageDelayed(DELAY, 1000);
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                            finish();
+                            mHandler.sendEmptyMessageDelayed(DELAY, 2000);
+                            // 这里注意，Dialog Attach 着 Activity，注意生命周期
+                            //startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            //finish();
                         } else {
                             mMyDialog.changeAlertType(SweetAlertDialog.WARNING_TYPE);
                             mMyDialog.setTitleText("请前往邮箱验证再来登陆");

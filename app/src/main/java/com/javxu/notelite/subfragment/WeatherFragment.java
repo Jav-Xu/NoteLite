@@ -50,10 +50,13 @@ public class WeatherFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_weather, container, false);
+        initView(view);
+        initData();
+        return view;
+    }
 
+    private void initView(View view) {
         bingPicImg = (ImageView) view.findViewById(R.id.bing_pic_img);
-        swipeRefreshlayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
-        swipeRefreshlayout.setColorSchemeResources(R.color.colorPrimary);
         weatherLayout = (NestedScrollView) view.findViewById(R.id.weather_layout);
         titleCity = (TextView) view.findViewById(R.id.title_city);
         titleUpdateTime = (TextView) view.findViewById(R.id.title_update_time);
@@ -65,7 +68,17 @@ public class WeatherFragment extends Fragment {
         comfortText = (TextView) view.findViewById(R.id.comfort_text);
         carWashText = (TextView) view.findViewById(R.id.car_wash_text);
         sportText = (TextView) view.findViewById(R.id.sport_text);
+        swipeRefreshlayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
+        swipeRefreshlayout.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefreshlayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                requestBJWeather();
+            }
+        });
+    }
 
+    private void initData() {
         String bingPic = SharedUtil.getString(getActivity(), "bing_pic", null);
         if (bingPic != null) {
             ImageUtil.loadImage(bingPic, bingPicImg);
@@ -80,15 +93,6 @@ public class WeatherFragment extends Fragment {
             weatherLayout.setVisibility(View.INVISIBLE);
             requestBJWeather();
         }
-
-        swipeRefreshlayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                requestBJWeather();
-            }
-        });
-
-        return view;
     }
 
     private void loadBingPic() {
@@ -134,7 +138,6 @@ public class WeatherFragment extends Fragment {
             }
         });
     }
-
 
     private void showWeatherInfo(Weather weather) {
         if (weather != null && "ok".equals(weather.status)) {

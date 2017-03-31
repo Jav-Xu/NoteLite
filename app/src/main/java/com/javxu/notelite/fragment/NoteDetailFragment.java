@@ -81,77 +81,11 @@ public class NoteDetailFragment extends Fragment implements View.OnClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        if (Build.VERSION.SDK_INT >= 21) {
-            View decorView = getActivity().getWindow().getDecorView();
-            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            getActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
-        }
-
         View view = inflater.inflate(R.layout.fragment_notedetail, container, false);
-
-        int noteId = getArguments().getInt("NOTEID");
-        List<Note> notes = DataSupport.where("id = ?", String.valueOf(noteId)).find(Note.class);
-        mNote = notes.get(0);
-
-        toolbar = (Toolbar) view.findViewById(R.id.toolbar_detail);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        mCollapsingToolbarLayout = (CollapsingToolbarLayout) view.findViewById(collapsing_toolbal);
-        mDetailNotePicImageView = (ImageView) view.findViewById(R.id.detail_note_pic_image_view);
-        mFloatingActionButton = (FloatingActionButton) view.findViewById(R.id.detail_note_shoot_fab);
-        mDetailNoteTitleEditText = (EditText) view.findViewById(R.id.detail_note_title_edit_text);
-        mDetailNoteDateButton = (Button) view.findViewById(R.id.detail_note_date_button);
-        mDetailNoteSolvedCheckBox = (CheckBox) view.findViewById(R.id.detail_note_solved_check_box);
-
-        mCollapsingToolbarLayout.setTitle(mNote.getNoteTitle());
-        ImageUtil.loadImage(mNote.getNoteImagePath(), mDetailNotePicImageView);
-        mDetailNoteTitleEditText.setText(mNote.getNoteTitle());
-        mDetailNoteTitleEditText.setSelection(mNote.getNoteTitle().length());
-        mDetailNoteDateButton.setText(mNote.getNoteDate().toString());
-        mDetailNoteSolvedCheckBox.setChecked(mNote.isNoteSolved());
-
-        PackageManager packageManager = getActivity().getPackageManager();
-        Intent shootIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        boolean canShoot = (mNote.getNoteImagePath() != null) && (shootIntent.resolveActivity(packageManager) != null);
-        if (canShoot) {
-            mFloatingActionButton.setClickable(true);
-            mFloatingActionButton.setOnClickListener(this);
-        }
-
-        mDetailNoteTitleEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mNote.setNoteTitle(s.toString());
-                mCollapsingToolbarLayout.setTitle(mNote.getNoteTitle());
-                mNote.update(mNote.getId());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        mDetailNoteDateButton.setOnClickListener(this);
-
-        mDetailNoteSolvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (!isChecked) {
-                    mNote.setToDefault("noteSolved");
-                } else {
-                    mNote.setNoteSolved(true);
-                }
-                mNote.update(mNote.getId());
-            }
-        });
-
+        initStatusBar();
+        initToolbar(view);
+        initData();
+        initView(view);
         return view;
     }
 
@@ -159,11 +93,6 @@ public class NoteDetailFragment extends Fragment implements View.OnClickListener
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     @Override
@@ -241,6 +170,83 @@ public class NoteDetailFragment extends Fragment implements View.OnClickListener
                 break;
             default:
         }
+    }
+
+    private void initStatusBar() {
+        if (Build.VERSION.SDK_INT >= 21) {
+            View decorView = getActivity().getWindow().getDecorView();
+            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            getActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
+    }
+
+    private void initToolbar(View view) {
+        toolbar = (Toolbar) view.findViewById(R.id.toolbar_detail);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void initData() {
+        int noteId = getArguments().getInt("NOTEID");
+        List<Note> notes = DataSupport.where("id = ?", String.valueOf(noteId)).find(Note.class);
+        mNote = notes.get(0);
+    }
+
+    private void initView(View view) {
+        mCollapsingToolbarLayout = (CollapsingToolbarLayout) view.findViewById(collapsing_toolbal);
+        mDetailNotePicImageView = (ImageView) view.findViewById(R.id.detail_note_pic_image_view);
+        mFloatingActionButton = (FloatingActionButton) view.findViewById(R.id.detail_note_shoot_fab);
+        mDetailNoteTitleEditText = (EditText) view.findViewById(R.id.detail_note_title_edit_text);
+        mDetailNoteDateButton = (Button) view.findViewById(R.id.detail_note_date_button);
+        mDetailNoteSolvedCheckBox = (CheckBox) view.findViewById(R.id.detail_note_solved_check_box);
+
+        mCollapsingToolbarLayout.setTitle(mNote.getNoteTitle());
+        ImageUtil.loadImage(mNote.getNoteImagePath(), mDetailNotePicImageView);
+        mDetailNoteTitleEditText.setText(mNote.getNoteTitle());
+        mDetailNoteTitleEditText.setSelection(mNote.getNoteTitle().length());
+        mDetailNoteDateButton.setText(mNote.getNoteDate().toString());
+        mDetailNoteSolvedCheckBox.setChecked(mNote.isNoteSolved());
+
+        PackageManager packageManager = getActivity().getPackageManager();
+        Intent shootIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        boolean canShoot = (mNote.getNoteImagePath() != null) && (shootIntent.resolveActivity(packageManager) != null);
+        if (canShoot) {
+            mFloatingActionButton.setClickable(true);
+            mFloatingActionButton.setOnClickListener(this);
+        }
+
+        mDetailNoteTitleEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mNote.setNoteTitle(s.toString());
+                mCollapsingToolbarLayout.setTitle(mNote.getNoteTitle());
+                mNote.update(mNote.getId());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        mDetailNoteDateButton.setOnClickListener(this);
+
+        mDetailNoteSolvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!isChecked) {
+                    mNote.setToDefault("noteSolved");
+                } else {
+                    mNote.setNoteSolved(true);
+                }
+                mNote.update(mNote.getId());
+            }
+        });
     }
 
     private boolean initImageFileAndUri() {

@@ -80,19 +80,21 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+        initToolbar();
         initView();
         initData();
     }
 
-    private void initView() {
-
+    private void initToolbar() {
         tb_user = (Toolbar) findViewById(R.id.toolbar_user);
         setSupportActionBar(tb_user);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+    }
 
+    private void initView() {
         civ_profile_image = (CircleImageView) findViewById(R.id.civ_profile_image);
         civ_profile_image.setOnClickListener(this);
 

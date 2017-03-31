@@ -34,19 +34,21 @@ public class WeChatActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wechat);
+        initToorbar();
         initView();
         initData();
     }
 
-    private void initView() {
-
+    private void initToorbar() {
         tb_wechat = (Toolbar) findViewById(R.id.toolbar_wechat);
         setSupportActionBar(tb_wechat);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+    }
 
+    private void initView() {
         mMyDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
         mMyDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
         mMyDialog.setTitleText("Loading");
