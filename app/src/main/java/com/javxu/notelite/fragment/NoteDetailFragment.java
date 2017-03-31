@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -36,20 +35,24 @@ import android.widget.Toast;
 
 import com.javxu.notelite.R;
 import com.javxu.notelite.bean.Note;
+import com.javxu.notelite.utils.DateUtil;
 import com.javxu.notelite.utils.FileUtil;
 import com.javxu.notelite.utils.ImageUtil;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.litepal.crud.DataSupport;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import static com.javxu.notelite.R.id.collapsing_toolbal;
 
 
-public class NoteDetailFragment extends Fragment implements View.OnClickListener {
+public class NoteDetailFragment extends Fragment implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
 
     public static final int REQUEST_DATE = 0;
     public static final int REQUEST_PHOTO = 1;
@@ -90,7 +93,7 @@ public class NoteDetailFragment extends Fragment implements View.OnClickListener
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
@@ -164,12 +167,30 @@ public class NoteDetailFragment extends Fragment implements View.OnClickListener
                 break;
             case R.id.detail_note_date_button:
                 FragmentManager manager = getFragmentManager();
-                DatePickerFragment fragment = DatePickerFragment.newInstance(mNote.getNoteDate());
-                fragment.setTargetFragment(NoteDetailFragment.this, REQUEST_DATE);
-                fragment.show(manager, "DIALOGDATE");
+                //使用原生 DatePicker 的方式
+                //DatePickerFragment fragment = DatePickerFragment.newInstance(mNote.getNoteDate());
+                //fragment.setTargetFragment(NoteDetailFragment.this, REQUEST_DATE);
+                //fragment.show(manager, "DIALOGDATE");
+                Calendar calendar = Calendar.getInstance();
+                Date date = mNote.getNoteDate();
+                calendar.setTime(date);
+                DatePickerDialog dpd = DatePickerDialog.newInstance(this,
+                        calendar.get(Calendar.YEAR),
+                        calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH)
+                );
+                dpd.show(manager, "Datepickerdialog");
                 break;
             default:
         }
+    }
+
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        Date date = new GregorianCalendar(year, monthOfYear, dayOfMonth).getTime();
+        mNote.setNoteDate(date);
+        mNote.update(mNote.getId());
+        mDetailNoteDateButton.setText(DateUtil.dateToStr(date));
     }
 
     private void initStatusBar() {
@@ -204,7 +225,7 @@ public class NoteDetailFragment extends Fragment implements View.OnClickListener
         ImageUtil.loadImage(mNote.getNoteImagePath(), mDetailNotePicImageView);
         mDetailNoteTitleEditText.setText(mNote.getNoteTitle());
         mDetailNoteTitleEditText.setSelection(mNote.getNoteTitle().length());
-        mDetailNoteDateButton.setText(mNote.getNoteDate().toString());
+        mDetailNoteDateButton.setText(DateUtil.dateToStr(mNote.getNoteDate()));
         mDetailNoteSolvedCheckBox.setChecked(mNote.isNoteSolved());
 
         PackageManager packageManager = getActivity().getPackageManager();
@@ -299,7 +320,7 @@ public class NoteDetailFragment extends Fragment implements View.OnClickListener
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case REQUEST_DATE:
+            /*case REQUEST_DATE:
                 if (data == null) {
                     return;
                 }
@@ -307,7 +328,7 @@ public class NoteDetailFragment extends Fragment implements View.OnClickListener
                 mDetailNoteDateButton.setText(date.toString());
                 mNote.setNoteDate(date);
                 mNote.update(mNote.getId());
-                break;
+                break;*/
             case REQUEST_PHOTO:
                 if (resultCode != Activity.RESULT_OK) {
                     mImageFile.delete();

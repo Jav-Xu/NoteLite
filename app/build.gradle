@@ -42,6 +42,7 @@ dependencies {
     compile 'org.litepal.android:core:1.5.0'
     compile 'com.android.support:design:24.2.1'
     compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'co.infinum:materialdatetimepicker-support:3.1.3'
 //    compile('com.google.code.gson:gson:2.8.0'){
 //        exclude group: 'com.google.code.gson'
 //    }

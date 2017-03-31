@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.javxu.notelite.R;
 import com.javxu.notelite.activity.NoteDetailActivity;
 import com.javxu.notelite.bean.Note;
+import com.javxu.notelite.utils.DateUtil;
 import com.javxu.notelite.utils.ImageUtil;
 
 import java.util.List;
@@ -56,7 +57,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
             if (note != null) {
                 mItemNoteTitleTextView.setText(note.getNoteTitle());
                 ImageUtil.loadImage(note.getNoteImagePath(), mItemNotePicImageView);
-                mItemNoteDateTextView.setText(note.getNoteDate().toString());
+                mItemNoteDateTextView.setText(DateUtil.dateToStr(note.getNoteDate()));
                 mItemNoteSolvedCheckBox.setChecked(note.isNoteSolved());
 
                 itemView.setOnClickListener(new View.OnClickListener() {
