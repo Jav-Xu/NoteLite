@@ -15,11 +15,11 @@ import java.util.List;
  * Created by Jav-Xu on 2016/12/30.
  */
 
-public class HomeFragmentApater extends FragmentStatePagerAdapter {
+public class FragmentApater extends FragmentStatePagerAdapter {
 
     private List<String> mTitles;
 
-    public HomeFragmentApater(FragmentManager fm, List<String> mTitles) {
+    public FragmentApater(FragmentManager fm, List<String> mTitles) {
         super(fm);
         this.mTitles = mTitles;
     }

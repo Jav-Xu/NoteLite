@@ -31,13 +31,29 @@
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
 
-        <activity android:name=".activity.LoginActivity">
+        <!--AppTheme(NoActionBar)-->
+        <activity
+            android:name=".activity.LoginActivity"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.MainActivity"
+            android:theme="@style/AppTheme">
+        </activity>
+        <activity
+            android:name=".activity.UserActivity"
+            android:label="Profile"
+            android:theme="@style/AppTheme">
+        </activity>
+        <!--AppTheme(NoActionBar)-->
+
+
+        <!--BackActivityTheme-->
         <activity
             android:name=".activity.RegisterActivity"
             android:theme="@style/BackActivityTheme">
@@ -47,25 +63,22 @@
             android:theme="@style/BackActivityTheme">
         </activity>
         <activity
-            android:name=".activity.MainActivity"
-            android:theme="@style/AppTheme">
+            android:name=".activity.WeChatActivity"
+            android:theme="@style/BackActivityTheme">
         </activity>
+        <!--BackActivityTheme-->
+
+
+        <!--根据版本不同对Theme有默认无ActionBar和透明状态栏之分-->
         <activity
             android:name=".activity.NoteDetailActivity"
             android:parentActivityName=".activity.MainActivity"
             android:theme="@style/NoteDetailActivityTheme">
         </activity>
-        <activity
-            android:name=".activity.WeChatActivity"
-            android:theme="@style/BackActivityTheme">
-        </activity>
+
 
         <service android:name=".service.AutoUpdateService"/>
 
-        <activity
-            android:name=".activity.UserActivity"
-            android:label="Profile">
-        </activity>
     </application>
 
 </manifest>

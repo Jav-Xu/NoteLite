@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="NoteMainActivityTheme" parent="AppTheme">
-        <item name="android:startColor">@android:color/transparent</item>
-    </style>
-
     <style name="NoteDetailActivityTheme" parent="AppTheme">
         <item name="android:startColor">@android:color/transparent</item>
     </style>
+
 </resources>

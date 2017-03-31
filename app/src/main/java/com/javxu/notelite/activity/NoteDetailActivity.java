@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 
+import com.javxu.notelite.base.SingFragmentActivity;
 import com.javxu.notelite.fragment.NoteDetailFragment;
 
 public class NoteDetailActivity extends SingFragmentActivity {

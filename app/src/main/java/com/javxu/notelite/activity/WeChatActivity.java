@@ -8,6 +8,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
 import com.javxu.notelite.R;
+import com.javxu.notelite.base.BackActivity;
 import com.javxu.notelite.bean.WeChat;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;

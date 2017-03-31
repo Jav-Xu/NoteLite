@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.javxu.notelite.R;
-import com.javxu.notelite.adapter.HomeFragmentApater;
+import com.javxu.notelite.adapter.FragmentApater;
 import com.javxu.notelite.bean.MyUser;
 import com.javxu.notelite.bean.Note;
 
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CircleImageView mNavCircleImageView;
     private TextView mEmailTextView;
     private TextView mNameTextView;
-    private HomeFragmentApater mHomeFragmentAdapter;
+    private FragmentApater mHomeFragmentAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initViewPager() {
         String[] titles = {"笔记列表", "今日天气", "微信精选", "美图欣赏"};
-        mHomeFragmentAdapter = new HomeFragmentApater(getSupportFragmentManager(), Arrays.asList(titles));
+        mHomeFragmentAdapter = new FragmentApater(getSupportFragmentManager(), Arrays.asList(titles));
         mViewPager.setAdapter(mHomeFragmentAdapter);
         mTabLayout.setupWithViewPager(mViewPager); // 将TabLayout和ViewPager关联起来。
         mViewPager.setCurrentItem(0);
