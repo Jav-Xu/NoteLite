@@ -53,6 +53,7 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
     private EditText et_profile_desc;
 
     private Button btn_profile_exit;
+    private Button btn_password_serve;
 
     private File mImageFile; //拍摄的照片临时文件
     private Uri mImageUri; //拍摄的照片临时文件
@@ -102,6 +103,8 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
 
         btn_profile_exit = (Button) findViewById(R.id.btn_profile_exit);
         btn_profile_exit.setOnClickListener(this);
+        btn_password_serve = (Button) findViewById(R.id.btn_password_serve);
+        btn_password_serve.setOnClickListener(this);
 
         setEditEnable(false);
     }
@@ -143,6 +146,9 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
                         })
                         .create()
                         .show();
+                break;
+            case R.id.btn_password_serve:
+                startActivity(new Intent(UserActivity.this, PasswordActivity.class));
                 break;
             case R.id.btn_profile_exit:
                 userExit();

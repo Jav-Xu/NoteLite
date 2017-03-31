@@ -31,7 +31,7 @@
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
 
-        <!--AppTheme(NoActionBar)-->
+        <!-- AppTheme(NoActionBar) -->
         <activity
             android:name=".activity.LoginActivity"
             android:theme="@style/AppTheme">
@@ -48,16 +48,17 @@
         <activity
             android:name=".activity.UserActivity"
             android:label="Profile"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
         <activity
             android:name=".activity.WeChatActivity"
             android:theme="@style/AppTheme">
         </activity>
-        <!--AppTheme(NoActionBar)-->
+        <!-- AppTheme(NoActionBar) -->
 
 
-        <!--BackActivityTheme-->
+        <!-- BackActivityTheme -->
         <activity
             android:name=".activity.RegisterActivity"
             android:theme="@style/BackActivityTheme">
@@ -66,16 +67,19 @@
             android:name=".activity.ForgetActivity"
             android:theme="@style/BackActivityTheme">
         </activity>
-        <!--BackActivityTheme-->
+        <activity
+            android:name=".activity.PasswordActivity"
+            android:theme="@style/BackActivityTheme">
+        </activity>
+        <!-- BackActivityTheme -->
 
 
-        <!--根据版本不同对Theme有默认AppTheme和透明状态栏Theme之分-->
+        <!-- 根据版本不同对Theme有默认AppTheme和透明状态栏Theme之分 -->
         <activity
             android:name=".activity.NoteDetailActivity"
             android:parentActivityName=".activity.MainActivity"
             android:theme="@style/TransparentBarActivityTheme">
         </activity>
-
 
         <service android:name=".service.AutoUpdateService"/>
 
