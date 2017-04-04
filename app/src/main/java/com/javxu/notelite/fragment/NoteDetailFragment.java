@@ -54,7 +54,7 @@ import static com.javxu.notelite.R.id.collapsing_toolbal;
 
 public class NoteDetailFragment extends Fragment implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
 
-    public static final int REQUEST_DATE = 0;
+    //public static final int REQUEST_DATE = 0;
     public static final int REQUEST_PHOTO = 1;
     public static final int REQUEST_GALLERY = 2;
     public static final int REQUEST_CROP = 3;
