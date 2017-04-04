@@ -13,6 +13,10 @@
     <!--透明状态栏主题-->
     <style name="TransparentBarActivityTheme" parent="AppTheme"></style>
 
-    <style name="BackActivityTheme" parent="Theme.AppCompat.Light.DarkActionBar"></style>
+    <style name="BackActivityTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
 
 </resources>
