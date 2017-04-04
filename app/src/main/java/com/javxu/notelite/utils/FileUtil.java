@@ -36,7 +36,7 @@ public class FileUtil {
     public static Uri getUriFromFile(Context context, File file) {
         Uri uri = null;
         if (Build.VERSION.SDK_INT >= 24) {
-            uri = FileProvider.getUriForFile(context, context.getPackageName() + ".fileprovider", file);
+            uri = FileProvider.getUriForFile(context, "com.javxu.notelite.fileprovider", file);
         } else {
             uri = Uri.fromFile(file);
         }

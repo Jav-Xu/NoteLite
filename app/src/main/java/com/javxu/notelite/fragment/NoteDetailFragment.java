@@ -336,6 +336,7 @@ public class NoteDetailFragment extends Fragment implements View.OnClickListener
                 }
                 //Uri photoUri = data.getData(); //空指针
                 Uri photoUri = mImageUri;
+                // content://com.javxu.notelite.fileprovider/my_images/NoteLite_IMG_1_XXX.jpg
                 toCrop(photoUri);
                 break;
             case REQUEST_GALLERY:
@@ -345,6 +346,7 @@ public class NoteDetailFragment extends Fragment implements View.OnClickListener
                     return;
                 }
                 Uri galleryUri = data.getData();
+                // content://media/external/images/media/24
                 toCrop(galleryUri);
                 break;
             case REQUEST_CROP:
