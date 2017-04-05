@@ -67,6 +67,10 @@
             android:name=".activity.PasswordActivity"
             android:theme="@style/BackActivityTheme">
         </activity>
+        <activity
+            android:name=".activity.SettingsActivity"
+            android:theme="@style/BackActivityTheme">
+        </activity>
         <!-- BackActivityTheme -->
 
 

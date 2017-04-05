@@ -1,5 +1,6 @@
 package com.javxu.notelite.activity;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -160,28 +161,36 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case REQUEST_PHOTO:
-                    Uri uri_camera = mImageUri;
-                    //Uri uri_camera = data.getData(); //这里为什么 NullPointerException
-                    toCrop(uri_camera);
-                    break;
-                case REQUEST_GALLERY:
-                    Uri uri_gallery = data.getData();
-                    toCrop(uri_gallery);
-                    break;
-                case REQUEST_CROP:
-                    if (data != null) { //有可能点击舍弃
-                        try {
-                            mAvatarBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(mImageUri));
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                        civ_profile_image.setImageBitmap(mAvatarBitmap);
-                    }
-                    break;
-            }
+        switch (requestCode) {
+            case REQUEST_PHOTO:
+                if (resultCode != Activity.RESULT_OK) {
+                    mImageFile.delete();
+                    return;
+                }
+                Uri uri_camera = mImageUri;
+                //Uri uri_camera = data.getData(); //这里为什么 NullPointerException
+                toCrop(uri_camera);
+                break;
+            case REQUEST_GALLERY:
+                if (resultCode != Activity.RESULT_OK) {
+                    mImageFile.delete();
+                    return;
+                }
+                Uri uri_gallery = data.getData();
+                toCrop(uri_gallery);
+                break;
+            case REQUEST_CROP:
+                if (resultCode != Activity.RESULT_OK) {
+                    mImageFile.delete();
+                    return;
+                }
+                try {
+                    mAvatarBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(mImageUri));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                civ_profile_image.setImageBitmap(mAvatarBitmap);
+                break;
         }
     }
 

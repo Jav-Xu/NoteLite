@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <android.support.v7.preference.PreferenceCategory android:title="常规设置">
+
+        <android.support.v7.preference.Preference
+            android:key="setting_user"
+            android:summary="设置当前账户的个人信息"
+            android:title="用户信息"/>
+
+        <android.support.v7.preference.ListPreference
+            android:dialogTitle="选择主题"
+            android:entries="@array/color_name"
+            android:entryValues="@array/color_value"
+            android:key="setting_color"
+            android:summary="设置应用界面的颜色主题"
+            android:title="界面主题"/>
+
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="setting_sms"
+            android:summary="在应用内部接收并查看信息"
+            android:title="短信监听"/>
+
+        <android.support.v7.preference.EditTextPreference
+            android:dialogTitle="保留天数"
+            android:key="setting_savedays"
+            android:summary="设置回收站内笔记保留天数"
+            android:title="笔记回收"/>
+
+    </android.support.v7.preference.PreferenceCategory>
+
+    <android.support.v7.preference.PreferenceCategory android:title="其他设置">
+
+        <android.support.v7.preference.Preference
+            android:key="setting_feedback"
+            android:title="意见反馈"/>
+
+        <android.support.v7.preference.Preference
+            android:key="setting_about"
+            android:title="关于NoteLite"/>
+
+    </android.support.v7.preference.PreferenceCategory>
+
+</android.support.v7.preference.PreferenceScreen>

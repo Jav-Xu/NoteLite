@@ -104,15 +104,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     case R.id.nav_trash:
                         mDrawerLayout.closeDrawers();
                         break;
-                    case R.id.nav_user:
-                        mDrawerLayout.closeDrawers();
-                        startActivity(new Intent(MainActivity.this, UserActivity.class));
-                        break;
                     case R.id.nav_share:
                         mDrawerLayout.closeDrawers();
                         break;
                     case R.id.nav_settings:
-                        mDrawerLayout.closeDrawers();
+                        startActivity(new Intent(MainActivity.this,SettingsActivity.class));
                         break;
                     default:
                 }

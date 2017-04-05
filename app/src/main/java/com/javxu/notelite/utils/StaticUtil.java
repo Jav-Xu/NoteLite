@@ -22,4 +22,6 @@ public class StaticUtil {
     public static final String SHARE_IS_KEEP = "isKeep";    //是否保存密码key
     public static final String SHARE_LAST_USERNAME = "lastUsername";//上次登录用户名
     public static final String SHARE_LAST_PASSWORD = "lastPassword"; //上次登录密码
+
+    public static final String SHARE_SETTING_USER = "setting_user"; //User Key
 }
