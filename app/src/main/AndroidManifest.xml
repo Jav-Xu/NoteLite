@@ -80,6 +80,14 @@
             android:parentActivityName=".activity.MainActivity"
             android:theme="@style/TransparentBarActivityTheme">
         </activity>
+        <!-- 根据版本不同对Theme有默认AppTheme和透明状态栏Theme之分 -->
+
+        <!-- HalfTransActivityTheme -->
+        <activity
+            android:name=".activity.PhotoPagerActivity"
+            android:theme="@style/HalfTransActivityTheme">
+        </activity>
+        <!-- HalfTransActivityTheme -->
 
         <service android:name=".service.AutoUpdateService"/>
 

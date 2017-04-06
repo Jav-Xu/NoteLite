@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.javxu.notelite.R;
 import com.javxu.notelite.adapter.PhotoAdapter;
+import com.javxu.notelite.bean.Photo;
 import com.javxu.notelite.utils.StaticUtil;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
@@ -28,7 +29,7 @@ public class GalleryFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private PhotoAdapter mPhotoAdapter;
-    private List<String> mUrlList = new ArrayList<>();
+    private List<Photo> mPhotoList = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,9 +88,19 @@ public class GalleryFragment extends Fragment {
             JSONArray array = jsonObject.getJSONArray("results");
             for (int i = 0; i < array.length(); i++) {
                 JSONObject object = array.getJSONObject(i);
+
+                Photo photo = new Photo();
+
                 String photoUrl = object.getString("url");
-                mUrlList.add(0, photoUrl);
-                mPhotoAdapter = new PhotoAdapter(getActivity(), mUrlList);
+                String photoWho = object.getString("who");
+                String photoPub = object.getString("publishedAt");
+
+                photo.setUrl(photoUrl);
+                photo.setWho(photoWho);
+                photo.setPubtime(photoPub);
+
+                mPhotoList.add(0,photo);
+                mPhotoAdapter = new PhotoAdapter(getActivity(), mPhotoList);
                 mPhotoAdapter.notifyDataSetChanged();
 
                 RecyclerView.LayoutManager manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);

@@ -1,6 +1,7 @@
 package com.javxu.notelite.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.javxu.notelite.R;
+import com.javxu.notelite.activity.PhotoPagerActivity;
+import com.javxu.notelite.bean.Photo;
 
 import java.util.List;
 
@@ -24,15 +27,15 @@ import java.util.List;
 
 public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoHolder> {
 
-    private List<String> mUrlList;
+    private List<Photo> mPhotoList;
     private Context mContext;
     private LayoutInflater mLayoutInflater;
     private WindowManager mWindowManager;
     private int width;
 
-    public PhotoAdapter(Context context, List<String> urlList) {
+    public PhotoAdapter(Context context, List<Photo> photoList) {
         mContext = context;
-        mUrlList = urlList;
+        mPhotoList = photoList;
         mLayoutInflater = LayoutInflater.from(context);
         mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
         width = mWindowManager.getDefaultDisplay().getWidth();
@@ -44,12 +47,20 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoHolder>
 
         public PhotoHolder(View itemView) {
             super(itemView);
-            this.mPhotoImageView = (ImageView) itemView.findViewById(R.id.imageView_photo);
+            mPhotoImageView = (ImageView) itemView.findViewById(R.id.imageView_photo);
         }
 
-        public void bindHolder(String imageUrl) {
-            //Utils.loadImage(imageUrl,mPhotoImageView);
-            Glide.with(mContext).load(imageUrl).override(width/2,300).into(mPhotoImageView);
+        public void bindHolder(final Photo photo) {
+            //ImageUtil.loadImage(imageUrl,mPhotoImageView);
+            final String imageUrl = photo.getUrl();
+            Glide.with(mContext).load(imageUrl).override(width / 2, 300).into(mPhotoImageView);
+            mPhotoImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = PhotoPagerActivity.getIntent(mContext, mPhotoList, photo.getUrl());
+                    mContext.startActivity(intent);
+                }
+            });
         }
     }
 
@@ -61,13 +72,13 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoHolder>
 
     @Override
     public void onBindViewHolder(PhotoHolder holder, int position) {
-        String url = mUrlList.get(position);
-        holder.bindHolder(url);
+        Photo photo = mPhotoList.get(position);
+        holder.bindHolder(photo);
     }
 
     @Override
     public int getItemCount() {
-        return mUrlList.size();
+        return mPhotoList.size();
     }
 
 
