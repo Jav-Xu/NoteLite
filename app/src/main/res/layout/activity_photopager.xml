@@ -11,18 +11,19 @@
         android:layout_centerVertical="true"
         android:src="@drawable/ic_left"/>
 
-    <com.javxu.notelite.activity.MyPhotoViewPager
-        android:id="@+id/my_photo_viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:layout_centerInParent="true">
-    </com.javxu.notelite.activity.MyPhotoViewPager>
-
     <ImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:src="@drawable/ic_right"/>
+
+    <!--图片放在最后渲染，保证缩放时可以遮盖两个方向标识-->
+    <com.javxu.notelite.activity.MyPhotoViewPager
+        android:id="@+id/my_photo_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_centerInParent="true">
+    </com.javxu.notelite.activity.MyPhotoViewPager>
 
 </RelativeLayout>
