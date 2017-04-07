@@ -13,12 +13,14 @@ public class Note extends DataSupport {
     private int id;
 
     private String noteTitle;
+    private String noteContent;
     private String noteImagePath;
     private Date noteDate;
     private boolean noteSolved;
 
     public Note() {
         noteTitle = new String();
+        noteContent = new String();
         noteImagePath = new String();
         noteDate = new Date();
         noteSolved = false;
@@ -38,6 +40,14 @@ public class Note extends DataSupport {
 
     public void setNoteTitle(String noteTitle) {
         this.noteTitle = noteTitle;
+    }
+
+    public String getNoteContent() {
+        return noteContent;
+    }
+
+    public void setNoteContent(String noteContent) {
+        this.noteContent = noteContent;
     }
 
     public String getNoteImagePath() {

@@ -22,11 +22,10 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.javxu.notelite.R;
@@ -34,6 +33,7 @@ import com.javxu.notelite.bean.Note;
 import com.javxu.notelite.utils.DateUtil;
 import com.javxu.notelite.utils.FileUtil;
 import com.javxu.notelite.utils.ImageUtil;
+import com.rengwuxian.materialedittext.MaterialEditText;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.litepal.crud.DataSupport;
@@ -61,9 +61,13 @@ public class NoteDetailActivity extends AppCompatActivity implements View.OnClic
     private ImageView mDetailNotePicImageView;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private FloatingActionButton mFloatingActionButton;
-    private EditText mDetailNoteTitleEditText;
-    private Button mDetailNoteDateButton;
+    private MaterialEditText mDetailNoteTitleEditText;
+    private MaterialEditText mDetailNoteContentEditText;
+    private TextView mDetailNoteDateTextView;
     private CheckBox mDetailNoteSolvedCheckBox;
+
+    private boolean editable = false;
+    private boolean isNewNote = false;
 
     public static Intent getIntent(Context context, int noteId) {
         Intent intent = new Intent(context, NoteDetailActivity.class);
@@ -79,6 +83,7 @@ public class NoteDetailActivity extends AppCompatActivity implements View.OnClic
         initToolbar();
         initData();
         initView();
+        setEditable(editable);
     }
 
     @Override
@@ -90,9 +95,45 @@ public class NoteDetailActivity extends AppCompatActivity implements View.OnClic
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            /*case android.R.id.home:
-                finish();
-                break;*/
+            case android.R.id.home:
+                if (mNote.isSaved()) {
+                    if (editable) {
+                        new AlertDialog.Builder(NoteDetailActivity.this)
+                                .setTitle("尚未保存，是否直接离开？")
+                                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        finish();
+                                    }
+                                })
+                                .setNegativeButton("取消", null)
+                                .create()
+                                .show();
+                    } else {
+                        finish();
+                    }
+                } else {
+                    finish();
+                }
+                break;
+            case R.id.operate:
+                if (editable) {
+                    editable = false;
+                    item.setIcon(R.drawable.ic_edit);
+                    setEditable(false);
+                    if (mNote.isSaved()) {
+                        mNote.update(mNote.getId());
+                    } else {
+                        mNote.save();
+                    }
+                    //mNote.saveOrUpdate("id = ?", String.valueOf(mNote.getId()));
+                    // 新建Note构造方法里没ID，但DataSupport可能有
+                } else {
+                    editable = true;
+                    item.setIcon(R.drawable.ic_save);
+                    setEditable(true);
+                }
+                break;
             case R.id.delete:
                 new AlertDialog.Builder(this)
                         .setTitle("注意：")
@@ -100,17 +141,13 @@ public class NoteDetailActivity extends AppCompatActivity implements View.OnClic
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                DataSupport.delete(Note.class, mNote.getId());
+                                if (mNote.isSaved()) {
+                                    DataSupport.delete(Note.class, mNote.getId());
+                                }
                                 finish();
                             }
                         })
-                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        }).show();
+                        .setNegativeButton("取消", null).show();
                 break;
             case R.id.send:
                 Intent sendIntent = ShareCompat.IntentBuilder.from(NoteDetailActivity.this)
@@ -123,6 +160,14 @@ public class NoteDetailActivity extends AppCompatActivity implements View.OnClic
             default:
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (isNewNote) {
+            menu.findItem(R.id.operate).setIcon(R.drawable.ic_save);
+        }
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -147,7 +192,7 @@ public class NoteDetailActivity extends AppCompatActivity implements View.OnClic
                         .create()
                         .show();
                 break;
-            case R.id.detail_note_date_button:
+            case R.id.detail_note_date_textview:
                 FragmentManager manager = getSupportFragmentManager();
                 Calendar calendar = Calendar.getInstance();
                 Date date = mNote.getNoteDate();
@@ -166,8 +211,8 @@ public class NoteDetailActivity extends AppCompatActivity implements View.OnClic
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
         Date date = new GregorianCalendar(year, monthOfYear, dayOfMonth).getTime();
         mNote.setNoteDate(date);
-        mNote.update(mNote.getId());
-        mDetailNoteDateButton.setText(DateUtil.dateToStr(date));
+        //mNote.update(mNote.getId());
+        mDetailNoteDateTextView.setText(DateUtil.dateToStr(date));
     }
 
     private void initStatusBar() {
@@ -185,24 +230,33 @@ public class NoteDetailActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void initData() {
-        int noteId = getIntent().getIntExtra("NOTEID", 0);
-        List<Note> notes = DataSupport.where("id = ?", String.valueOf(noteId)).find(Note.class);
-        mNote = notes.get(0);
+        int noteId = getIntent().getIntExtra("NOTEID", -1);
+        if (noteId == -1) {
+            isNewNote = true;
+            mNote = new Note();
+            editable = true; // 新建的 Note 要一开始就处于编辑状态
+            invalidateOptionsMenu(); // 回调 onPrepareOptionsMenu 方法，编辑toolbar
+        } else {
+            List<Note> notes = DataSupport.where("id = ?", String.valueOf(noteId)).find(Note.class);
+            mNote = notes.get(0);
+        }
     }
 
     private void initView() {
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(collapsing_toolbal);
         mDetailNotePicImageView = (ImageView) findViewById(R.id.detail_note_pic_image_view);
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.detail_note_shoot_fab);
-        mDetailNoteTitleEditText = (EditText) findViewById(R.id.detail_note_title_edit_text);
-        mDetailNoteDateButton = (Button) findViewById(R.id.detail_note_date_button);
+        mDetailNoteTitleEditText = (MaterialEditText) findViewById(R.id.detail_note_title_edit_text);
+        mDetailNoteContentEditText = (MaterialEditText) findViewById(R.id.content_edit_text);
+        mDetailNoteDateTextView = (TextView) findViewById(R.id.detail_note_date_textview);
         mDetailNoteSolvedCheckBox = (CheckBox) findViewById(R.id.detail_note_solved_check_box);
 
         mCollapsingToolbarLayout.setTitle(mNote.getNoteTitle());
         ImageUtil.loadImage(mNote.getNoteImagePath(), mDetailNotePicImageView);
         mDetailNoteTitleEditText.setText(mNote.getNoteTitle());
         mDetailNoteTitleEditText.setSelection(mNote.getNoteTitle().length());
-        mDetailNoteDateButton.setText(DateUtil.dateToStr(mNote.getNoteDate()));
+        mDetailNoteContentEditText.setText(mNote.getNoteContent());
+        mDetailNoteDateTextView.setText(DateUtil.dateToStr(mNote.getNoteDate()));
         mDetailNoteSolvedCheckBox.setChecked(mNote.isNoteSolved());
 
         PackageManager packageManager = getPackageManager();
@@ -221,8 +275,8 @@ public class NoteDetailActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mNote.setNoteTitle(s.toString());
-                mCollapsingToolbarLayout.setTitle(mNote.getNoteTitle());
-                mNote.update(mNote.getId());
+                mCollapsingToolbarLayout.setTitle(s.toString());
+                //mNote.update(mNote.getId());
             }
 
             @Override
@@ -230,7 +284,23 @@ public class NoteDetailActivity extends AppCompatActivity implements View.OnClic
             }
         });
 
-        mDetailNoteDateButton.setOnClickListener(this);
+        mDetailNoteContentEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mNote.setNoteContent(s.toString());
+                //mNote.update(mNote.getId());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        mDetailNoteDateTextView.setOnClickListener(this);
 
         mDetailNoteSolvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -240,9 +310,18 @@ public class NoteDetailActivity extends AppCompatActivity implements View.OnClic
                 } else {
                     mNote.setNoteSolved(true);
                 }
-                mNote.update(mNote.getId());
+                //mNote.update(mNote.getId());
             }
         });
+    }
+
+    private void setEditable(boolean flag) {
+        mFloatingActionButton.setClickable(flag);
+        mDetailNoteTitleEditText.setEnabled(flag);
+        mDetailNoteDateTextView.setClickable(flag);
+        mDetailNoteDateTextView.setEnabled(flag);
+        mDetailNoteSolvedCheckBox.setEnabled(flag);
+        mDetailNoteContentEditText.setEnabled(flag);
     }
 
     private boolean initImageFileAndUri() {
@@ -321,7 +400,7 @@ public class NoteDetailActivity extends AppCompatActivity implements View.OnClic
                     return;
                 }
                 mNote.setNoteImagePath(mImageUri.getPath()); //String.valueOf(mImageUri)) 返回会加上 file:///stroage/sdcard...
-                mNote.update(mNote.getId());
+                //mNote.update(mNote.getId());
                 ImageUtil.loadImage(mNote.getNoteImagePath(), mDetailNotePicImageView);
                 break;
             default:

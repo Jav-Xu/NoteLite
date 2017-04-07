@@ -44,7 +44,7 @@
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -55,35 +55,62 @@
             android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <TextView
-                style="?android:listSeparatorTextViewStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/note_title_label"/>
-
-            <EditText
+            <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/detail_note_title_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
-                android:hint="@string/note_title_hint"/>
+                android:layout_marginTop="16dp"
+                android:hint="@string/hint_input_title"
+                app:met_hideUnderline="true"/>
 
-            <TextView
-                style="?android:listSeparatorTextViewStyle"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/note_details_lable"/>
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical">
 
-            <Button
-                android:id="@+id/detail_note_date_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DEADLINE: "
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"/>
 
-            <CheckBox
-                android:id="@+id/detail_note_solved_check_box"
+                <TextView
+                    android:id="@+id/detail_note_date_textview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"/>
+
+                <CheckBox
+                    android:id="@+id/detail_note_solved_check_box"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/note_solved_lable"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/content_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/note_solved_lable"/>
+                android:layout_marginTop="10dp"
+                android:hint="@string/hint_input_content"
+                android:lineSpacingExtra="4dp"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelAlwaysShown="true"
+                app:met_floatingLabelText="@string/note_content"
+                app:met_floatingLabelTextColor="?attr/colorPrimary"
+                app:met_hideUnderline="true"
+                app:met_primaryColor="?attr/colorPrimary"/>
 
         </LinearLayout>
 

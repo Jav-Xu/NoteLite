@@ -77,8 +77,8 @@
         <!-- 根据版本不同对Theme有默认AppTheme和透明状态栏Theme之分 -->
         <activity
             android:name=".activity.NoteDetailActivity"
-            android:parentActivityName=".activity.MainActivity"
             android:theme="@style/TransparentBarActivityTheme">
+        <!--android:parentActivityName=".activity.MainActivity"-->
         </activity>
         <!-- 根据版本不同对Theme有默认AppTheme和透明状态栏Theme之分 -->
 

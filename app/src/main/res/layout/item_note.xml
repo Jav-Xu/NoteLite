@@ -39,7 +39,7 @@
                 android:maxLines="1"
                 android:padding="4dp"
                 android:textColor="#ffffff"
-                android:textSize="20sp"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 tools:text="Crime Title"/>
         </FrameLayout>
@@ -48,16 +48,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Deadline: "
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/item_note_date_text_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
                 android:layout_weight="1"
                 android:maxLines="1"
-                android:padding="4dp"
+                android:textColor="@color/colorPrimary"
                 tools:text="Crime Date"/>
 
             <CheckBox
@@ -65,9 +73,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
                 android:clickable="false"
-                android:padding="4dp"/>
+                android:textStyle="bold"/>
 
         </LinearLayout>
     </LinearLayout>

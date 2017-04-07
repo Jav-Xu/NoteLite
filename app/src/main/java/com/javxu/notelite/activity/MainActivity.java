@@ -20,7 +20,6 @@ import com.bumptech.glide.Glide;
 import com.javxu.notelite.R;
 import com.javxu.notelite.adapter.FragmentApater;
 import com.javxu.notelite.bean.MyUser;
-import com.javxu.notelite.bean.Note;
 
 import java.util.Arrays;
 
@@ -108,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         mDrawerLayout.closeDrawers();
                         break;
                     case R.id.nav_settings:
-                        startActivity(new Intent(MainActivity.this,SettingsActivity.class));
+                        startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                         break;
                     default:
                 }
@@ -172,9 +171,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(MainActivity.this, UserActivity.class));
                 break;
             case R.id.list_note_add_fab:
-                Note note = new Note();
-                note.save();
-                Intent intent = NoteDetailActivity.getIntent(MainActivity.this, note.getId());
+                //Note note = new Note();
+                //note.save();
+                Intent intent = NoteDetailActivity.getIntent(MainActivity.this, -1);
                 startActivity(intent);
         }
     }
