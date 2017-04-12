@@ -23,11 +23,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="16dp"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
+                android:layout_height="160dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -45,20 +46,20 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/text_profile_name"
-                    android:textSize="20dp"/>
+                    android:textSize="18sp"/>
 
                 <EditText
                     android:id="@+id/et_profile_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimary"/>
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"/>
 
             </LinearLayout>
 
@@ -66,14 +67,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/text_profile_sex"
-                    android:textSize="20dp"/>
+                    android:textSize="18sp"/>
 
                 <EditText
                     android:id="@+id/et_profile_sex"
@@ -81,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:hint="男/女"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="20dp"/>
+                    android:textSize="18sp"/>
 
             </LinearLayout>
 
@@ -89,20 +89,20 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/text_profile_age"
-                    android:textSize="20dp"/>
+                    android:textSize="18sp"/>
 
                 <EditText
                     android:id="@+id/et_profile_age"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimary"/>
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"/>
 
             </LinearLayout>
 
@@ -110,40 +110,42 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/text_profile_desc"
-                    android:textSize="20dp"/>
+                    android:textSize="18sp"/>
 
                 <EditText
                     android:id="@+id/et_profile_desc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimary"/>
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"/>
 
             </LinearLayout>
-
-            <Button
-                android:id="@+id/btn_profile_exit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/button_bg"
-                android:text="@string/text_profile_exit"
-                android:textColor="@android:color/white"/>
 
             <Button
                 android:id="@+id/btn_password_serve"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/button_bg"
                 android:text="@string/text_password_serve"
-                android:textColor="@android:color/white"/>
+                android:textColor="@android:color/white"
+                android:textSize="16sp"/>
+
+            <Button
+                android:id="@+id/btn_profile_exit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_bg"
+                android:text="@string/text_profile_exit"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"/>
 
         </LinearLayout>
 

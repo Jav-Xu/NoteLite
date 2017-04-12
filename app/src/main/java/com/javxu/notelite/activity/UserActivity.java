@@ -65,6 +65,8 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
 
     private static final int DELAY = 404;
 
+    private boolean enable = false;
+
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -109,7 +111,7 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
         btn_password_serve = (Button) findViewById(R.id.btn_password_serve);
         btn_password_serve.setOnClickListener(this);
 
-        setEditEnable(false);
+        setEditEnable(enable);
     }
 
     private void initData() {
@@ -205,10 +207,14 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
                 finish();
                 break;
             case R.id.edit:
-                setEditEnable(true);
-                break;
-            case R.id.save:
-                profileUpdate();
+                if (enable){
+                    item.setIcon(R.drawable.ic_edit);
+                    profileUpdate();
+                }else {
+                    item.setIcon(R.drawable.ic_save);
+                    enable = true;
+                    setEditEnable(enable);
+                }
                 break;
         }
         return true;
