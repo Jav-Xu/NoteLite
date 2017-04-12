@@ -1,6 +1,5 @@
 package com.javxu.notelite.activity;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -31,7 +30,6 @@ import com.javxu.notelite.utils.FileUtil;
 import com.javxu.notelite.utils.ImageUtil;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
@@ -58,6 +56,8 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
 
     private File mImageFile; //拍摄的照片临时文件
     private Uri mImageUri; //拍摄的照片临时文件
+    private File mCropFile;  //裁剪照片File
+    private Uri mCropUri;    //裁剪照片Uri
 
     private Bitmap mAvatarBitmap; //裁剪后的头像文件
 
@@ -139,10 +139,14 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
                             public void onClick(DialogInterface dialog, int which) {
                                 switch (which) {
                                     case 0:
-                                        toGallery();
+                                        if (initImageFileAndUriSuccess()) {
+                                            toGallery();
+                                        }
                                         break;
                                     case 1:
-                                        toCamera();
+                                        if (initImageFileAndUriSuccess()) {
+                                            toCamera();
+                                        }
                                         break;
                                 }
                             }
@@ -161,35 +165,29 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK) {
+            mImageFile.delete();
+            mCropFile.delete();
+            return;
+        }
         switch (requestCode) {
             case REQUEST_PHOTO:
-                if (resultCode != Activity.RESULT_OK) {
-                    mImageFile.delete();
-                    return;
-                }
-                Uri uri_camera = mImageUri;
-                //Uri uri_camera = data.getData(); //这里为什么 NullPointerException
+                Uri uri_camera = FileUtil.getContentUriFromFile(UserActivity.this, mImageFile);
                 toCrop(uri_camera);
                 break;
             case REQUEST_GALLERY:
-                if (resultCode != Activity.RESULT_OK) {
-                    mImageFile.delete();
-                    return;
-                }
                 Uri uri_gallery = data.getData();
                 toCrop(uri_gallery);
                 break;
             case REQUEST_CROP:
-                if (resultCode != Activity.RESULT_OK) {
-                    mImageFile.delete();
-                    return;
-                }
                 try {
-                    mAvatarBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(mImageUri));
-                } catch (FileNotFoundException e) {
+                    mImageFile.delete();
+                    mAvatarBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(mCropUri));
+                    civ_profile_image.setImageBitmap(mAvatarBitmap);
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-                civ_profile_image.setImageBitmap(mAvatarBitmap);
                 break;
         }
     }
@@ -229,35 +227,39 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
         et_profile_desc.setEnabled(b);
     }
 
-    private void initImageFileAndUri() {
+    private boolean initImageFileAndUriSuccess() {
+        boolean flag = false;
         mImageFile = new File(FileUtil.getExternalPicturesFileDir(), "NoteLite_UserAvaTemp_" + System.currentTimeMillis() + ".jpg");
+        mCropFile = new File(FileUtil.getExternalPicturesFileDir(), "NoteLite_UserAvaCrop_" + System.currentTimeMillis() + ".jpg");
         try {
             mImageFile.createNewFile();
+            mCropFile.createNewFile();
             mImageUri = FileUtil.getUriFromFile(this, mImageFile);
+            mCropUri = Uri.fromFile(mCropFile);
+            flag = true;
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, "为照片预备文件出错", Toast.LENGTH_SHORT).show();
+        } finally {
+            return flag;
         }
     }
 
     private void toCamera() {
-        initImageFileAndUri();
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        cameraIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        cameraIntent.putExtra("return-data", false);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
         startActivityForResult(cameraIntent, REQUEST_PHOTO);
     }
 
     private void toGallery() {
-        initImageFileAndUri();
         Intent galleryIntent = new Intent(Intent.ACTION_PICK);
         galleryIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
         startActivityForResult(galleryIntent, REQUEST_GALLERY);
     }
 
     private void toCrop(Uri uri) {
-        if (uri == null) {
-            return;
-        }
         Intent cropIntent = new Intent("com.android.camera.action.CROP");
         cropIntent.setDataAndType(uri, "image/*");
 
@@ -269,8 +271,8 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
         cropIntent.putExtra("outputX", 320);//裁剪图片的质量
         cropIntent.putExtra("outputY", 320);
 
-        cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri); // 设置是否将裁剪结果保存到指定文件中，这里直接在原图上裁剪覆盖操作
-        cropIntent.putExtra("return-data", false); // 设置是否在 onActivityResult 方法的 intent 值中返回 Bitmap 缩略图对象
+        cropIntent.putExtra("return-data", false);
+        cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCropUri);
         startActivityForResult(cropIntent, REQUEST_CROP);
     }
 

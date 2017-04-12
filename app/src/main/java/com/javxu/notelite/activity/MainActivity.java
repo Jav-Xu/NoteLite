@@ -1,10 +1,14 @@
 package com.javxu.notelite.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -15,6 +19,7 @@ import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.javxu.notelite.R;
@@ -27,6 +32,8 @@ import cn.bmob.v3.BmobUser;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    public static final int REQUEST_PERMISSION = 0;
 
     private Toolbar mToolbar;
     private TabLayout mTabLayout;
@@ -49,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initToolbar();
         initViewPager();
         initData();
+        initRequestPermissions();
     }
 
     @Override
@@ -153,6 +161,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mViewPager.setOffscreenPageLimit(3);
     }
 
+    private void initRequestPermissions() {
+        // 应用已启动加载就开始申请权限，包括文件读写（要为照片准备文件）和相机拍照权限，这里由检查文件读写这一项权限触发，来申请两项权限
+        String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this, permissions, REQUEST_PERMISSION);
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -175,6 +191,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //note.save();
                 Intent intent = NoteDetailActivity.getIntent(MainActivity.this, -1);
                 startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_PERMISSION:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    return;
+                } else {
+                    Toast.makeText(MainActivity.this, "你拒绝了一些权限，之后将不能进行相片操作", Toast.LENGTH_LONG).show();
+                }
+                break;
         }
     }
 }
