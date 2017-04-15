@@ -207,10 +207,11 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
                 finish();
                 break;
             case R.id.edit:
-                if (enable){
-                    item.setIcon(R.drawable.ic_edit);
+                if (enable) {
+                    // 不应该点击保存键就变icon，正确的逻辑是更新成功才变，失败就不应该变
+                    //item.setIcon(R.drawable.ic_edit);
                     profileUpdate();
-                }else {
+                } else {
                     item.setIcon(R.drawable.ic_save);
                     enable = true;
                     setEditEnable(enable);
@@ -218,6 +219,16 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (enable) { //TODO 这里不知为什么需要enable判断一下才对
+            // 否则错误是java.lang.IndexOutOfBoundsException: Invalid index 2131689777, size is 1
+            // at java.util.ArrayList.throwIndexOutOfBoundsException(ArrayList.java:255)
+            menu.getItem(R.id.edit).setIcon(R.drawable.ic_save);
+        }
+        return super.onPrepareOptionsMenu(menu);
     }
 
     /**
@@ -324,7 +335,9 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void done(BmobException e) {
                     if (e == null) {
-                        setEditEnable(false);
+                        enable = false;
+                        setEditEnable(enable);
+                        invalidateOptionsMenu(); // 更新成功去更改toolbar的item的icon
                         mMyDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                         mMyDialog.setTitleText("用户信息更新成功");
                         mHandler.sendEmptyMessageDelayed(DELAY, 1000);
