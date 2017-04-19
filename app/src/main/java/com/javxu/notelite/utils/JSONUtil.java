@@ -1,6 +1,8 @@
 package com.javxu.notelite.utils;
 
 import com.google.gson.Gson;
+import com.javxu.notelite.gson.PhotosResult;
+import com.javxu.notelite.gson.WeChatsResult;
 import com.javxu.notelite.gson.Weather;
 
 import org.json.JSONArray;
@@ -31,4 +33,13 @@ public class JSONUtil {
         return null;
     }
 
+    public static PhotosResult handleGalleryResponse(String reponse) {
+        PhotosResult photos = new Gson().fromJson(reponse, PhotosResult.class);
+        return photos;
+    }
+
+    public static WeChatsResult handleWeChatResponse(String reponse) {
+        WeChatsResult result = new Gson().fromJson(reponse, WeChatsResult.class);
+        return result;
+    }
 }

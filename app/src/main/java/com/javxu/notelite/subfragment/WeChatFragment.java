@@ -13,15 +13,13 @@ import android.widget.Toast;
 
 import com.javxu.notelite.R;
 import com.javxu.notelite.adapter.WeChatAdapter;
-import com.javxu.notelite.bean.WeChat;
+import com.javxu.notelite.gson.WeChat;
+import com.javxu.notelite.gson.WeChatsResult;
+import com.javxu.notelite.utils.JSONUtil;
 import com.javxu.notelite.utils.StaticUtil;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.http.VolleyError;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +48,11 @@ public class WeChatFragment extends Fragment {
 
     private void initView(View view) {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_wechat);
+        mWeChatAdapter = new WeChatAdapter(getActivity(), mWeChatList);
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(manager);
+        mRecyclerView.setAdapter(mWeChatAdapter);
+
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_wechat);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
 
@@ -65,42 +68,30 @@ public class WeChatFragment extends Fragment {
         String url = "http://v.juhe.cn/weixin/query?pno=" + page + "&key=" + StaticUtil.WeChat_Key;
         RxVolley.get(url, new HttpCallback() {
             @Override
+            public void onSuccess(String t) {
+                WeChatsResult result = JSONUtil.handleWeChatResponse(t);
+                if (result != null && (0 == result.error_code)) {
+                    showWeChatsResult(result);
+                } else {
+                    Toast.makeText(getActivity(), "获取文章信息失败", Toast.LENGTH_LONG).show();
+                }
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
             public void onFailure(VolleyError error) {
                 super.onFailure(error);
                 Toast.makeText(getActivity(), "加载失败", Toast.LENGTH_SHORT).show();
                 mSwipeRefreshLayout.setRefreshing(false);
             }
-
-            @Override
-            public void onSuccess(String t) {
-                super.onSuccess(t);
-                parseJSON(t);
-            }
         });
     }
 
-    private void parseJSON(String str) {
-        try {
-            JSONObject object = new JSONObject(str);
-            JSONObject result = object.getJSONObject("result");
-            JSONArray array = result.getJSONArray("list");
-            for (int i = 0; i < array.length(); i++) {
-                JSONObject news = array.getJSONObject(i);
-                WeChat data = new WeChat();
-                data.setTitle(news.getString("title"));
-                data.setSource(news.getString("source"));
-                data.setFirstImg(news.getString("firstImg"));
-                data.setNewsUrl(news.getString("url"));
-                mWeChatList.add(0, data);
-                mWeChatAdapter = new WeChatAdapter(getActivity(), mWeChatList);
-                mWeChatAdapter.notifyDataSetChanged();
-                RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
-                mRecyclerView.setLayoutManager(manager);
-                mRecyclerView.setAdapter(mWeChatAdapter);
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+    private void showWeChatsResult(WeChatsResult result) {
+        for (WeChat weChat : result.weChats.weChatList) {
+            mWeChatList.add(0, weChat);
         }
+        mWeChatAdapter.notifyDataSetChanged();
     }
+
 }

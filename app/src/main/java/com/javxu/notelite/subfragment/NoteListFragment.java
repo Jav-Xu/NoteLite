@@ -17,7 +17,7 @@ import org.litepal.crud.DataSupport;
 
 import java.util.List;
 
-public class NoteListFragment extends Fragment implements View.OnClickListener {
+public class NoteListFragment extends Fragment {
 
     public static final String TAG = "NoteListFragment";
     private List<Note> mNotes;
@@ -45,14 +45,6 @@ public class NoteListFragment extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         updateList();
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            default:
-        }
     }
 
     public void updateList() {

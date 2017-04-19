@@ -13,7 +13,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
 import com.javxu.notelite.R;
-import com.javxu.notelite.bean.WeChat;
+import com.javxu.notelite.gson.WeChat;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -25,8 +25,8 @@ public class WeChatActivity extends AppCompatActivity  {
 
     public static Intent getIntent(Context context, WeChat weChat) {
         Intent intent = new Intent(context, WeChatActivity.class);
-        intent.putExtra("url", weChat.getNewsUrl());
-        intent.putExtra("title", weChat.getTitle());
+        intent.putExtra("url", weChat.url);
+        intent.putExtra("title", weChat.title);
         return intent;
     }
 

@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.javxu.notelite.R;
 import com.javxu.notelite.activity.WeChatActivity;
-import com.javxu.notelite.bean.WeChat;
+import com.javxu.notelite.gson.WeChat;
 
 import java.util.List;
 
@@ -54,15 +54,15 @@ public class WeChatAdapter extends RecyclerView.Adapter<WeChatAdapter.WeChatHold
         }
 
         public void bindHolder(final WeChat wechat) {
-            if (wechat != null && (!TextUtils.isEmpty(wechat.getFirstImg()))) {
+            if (wechat != null && (!TextUtils.isEmpty(wechat.firstImg))) {
                 Glide.with(mContext)
-                        .load(wechat.getFirstImg())
+                        .load(wechat.firstImg)
                         .placeholder(R.mipmap.ic_launcher)
                         .error(R.mipmap.ic_launcher)
                         .centerCrop()
                         .into(mWeChatIcon);
-                mWeChatTitle.setText(wechat.getTitle());
-                mWeChatSource.setText(wechat.getSource());
+                mWeChatTitle.setText(wechat.title);
+                mWeChatSource.setText(wechat.source);
 
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override

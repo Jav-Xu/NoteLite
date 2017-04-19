@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.javxu.notelite.R;
 import com.javxu.notelite.activity.PhotoPagerActivity;
-import com.javxu.notelite.bean.Photo;
+import com.javxu.notelite.gson.Photo;
 
 import java.util.List;
 
@@ -52,12 +52,12 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoHolder>
 
         public void bindHolder(final Photo photo) {
             //ImageUtil.loadImage(imageUrl,mPhotoImageView);
-            final String imageUrl = photo.getUrl();
+            final String imageUrl = photo.url;
             Glide.with(mContext).load(imageUrl).override(width / 2, 300).into(mPhotoImageView);
             mPhotoImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = PhotoPagerActivity.getIntent(mContext, mPhotoList, photo.getUrl());
+                    Intent intent = PhotoPagerActivity.getIntent(mContext, mPhotoList, photo.url);
                     mContext.startActivity(intent);
                 }
             });

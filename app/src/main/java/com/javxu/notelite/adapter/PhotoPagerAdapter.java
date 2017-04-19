@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.chrisbanes.photoview.PhotoView;
-import com.javxu.notelite.bean.Photo;
+import com.javxu.notelite.gson.Photo;
 import com.javxu.notelite.utils.ImageUtil;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class PhotoPagerAdapter extends PagerAdapter {
     public View instantiateItem(ViewGroup container, int position) {
 
         PhotoView photoView = new PhotoView(container.getContext());
-        ImageUtil.loadImage(mList.get(position).getUrl(), photoView);
+        ImageUtil.loadImage(mList.get(position).url, photoView);
 
         // Now just add PhotoView to ViewPager and return it
         container.addView(photoView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);

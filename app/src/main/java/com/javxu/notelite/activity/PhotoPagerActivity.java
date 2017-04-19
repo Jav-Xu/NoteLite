@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.javxu.notelite.R;
 import com.javxu.notelite.adapter.PhotoPagerAdapter;
-import com.javxu.notelite.bean.Photo;
+import com.javxu.notelite.gson.Photo;
 
 import java.io.Serializable;
 import java.util.List;
@@ -46,7 +46,7 @@ public class PhotoPagerActivity extends AppCompatActivity {
 
         mViewPager.setAdapter(new PhotoPagerAdapter(this, mPhotoList));
         for (int i = 0; i < mPhotoList.size(); i++) {
-            if (mSelectUrl.equals(mPhotoList.get(i).getUrl())) {
+            if (mSelectUrl.equals(mPhotoList.get(i).url)) {
                 mViewPager.setCurrentItem(i);
             }
         }
