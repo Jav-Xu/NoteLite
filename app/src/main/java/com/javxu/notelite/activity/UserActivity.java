@@ -28,6 +28,7 @@ import com.javxu.notelite.R;
 import com.javxu.notelite.bean.MyUser;
 import com.javxu.notelite.utils.FileUtil;
 import com.javxu.notelite.utils.ImageUtil;
+import com.javxu.notelite.utils.StaticUtil;
 
 import java.io.File;
 
@@ -296,6 +297,7 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
     private void userExit() {
         BmobUser.logOut();   //清除缓存用户对象
         BmobUser currentUser = BmobUser.getCurrentUser(); // 现在的currentUser是null了
+        sendBroadcast(new Intent(StaticUtil.LOGOUT_ACTION_NAME));
         startActivity(new Intent(UserActivity.this, LoginActivity.class));
         finish();
     }

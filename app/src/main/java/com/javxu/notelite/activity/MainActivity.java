@@ -1,7 +1,10 @@
 package com.javxu.notelite.activity;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -25,6 +28,7 @@ import com.bumptech.glide.Glide;
 import com.javxu.notelite.R;
 import com.javxu.notelite.adapter.FragmentApater;
 import com.javxu.notelite.bean.MyUser;
+import com.javxu.notelite.utils.StaticUtil;
 
 import java.util.Arrays;
 
@@ -47,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mNameTextView;
     private FragmentApater mHomeFragmentAdapter;
 
+    private BroadcastReceiver mLogoutReceiver; // 退出登录后，UserActivity 发送广播，MainActivity就不能作为栈底，也要销毁
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initToolbar();
         initViewPager();
         initData();
+        initBroadcastReceiver();
         initRequestPermissions();
     }
 
@@ -161,6 +168,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mViewPager.setOffscreenPageLimit(3);
     }
 
+    private void initBroadcastReceiver() {
+
+        mLogoutReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                MainActivity.this.finish();
+            }
+        };
+        IntentFilter filter = new IntentFilter(StaticUtil.LOGOUT_ACTION_NAME);
+
+        registerReceiver(mLogoutReceiver, filter);
+    }
+
     private void initRequestPermissions() {
         // 应用已启动加载就开始申请权限，包括文件读写（要为照片准备文件）和相机拍照权限，这里由检查文件读写这一项权限触发，来申请两项权限
         String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
@@ -205,6 +225,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(mLogoutReceiver);
     }
 }
 

@@ -19,10 +19,12 @@ public class StaticUtil {
     public static final String BMOB_Key = "56f6d7b9a6d5023f54065ec20b377632";
 
     //SharedPreference KEY
-    public static final String SHARE_IS_FIRST = "isFirst"; //是否第一次启动 key
     public static final String SHARE_IS_KEEP = "isKeep";    //是否保存密码key
     public static final String SHARE_LAST_USERNAME = "lastUsername";//上次登录用户名
     public static final String SHARE_LAST_PASSWORD = "lastPassword"; //上次登录密码
 
     public static final String SHARE_SETTING_USER = "setting_user"; //User Key
+
+    public static final String LOGOUT_ACTION_NAME = "logout";
+
 }
