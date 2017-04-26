@@ -19,6 +19,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mNameTextView;
     private FragmentApater mHomeFragmentAdapter;
 
+    private long mExitTime = 0;
     private BroadcastReceiver mLogoutReceiver; // 退出登录后，UserActivity 发送广播，MainActivity就不能作为栈底，也要销毁
 
     @Override
@@ -232,6 +234,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onDestroy();
         unregisterReceiver(mLogoutReceiver);
     }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+      if (keyCode == KeyEvent.KEYCODE_BACK) {
+          if ((System.currentTimeMillis() - mExitTime) > 1000) {//
+              // 如果两次按键时间间隔大于2000毫秒，则不退出
+              Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+              mExitTime = System.currentTimeMillis();// 更新mExitTime
+          } else {
+              //System.exit(0);// 否则退出程序
+              moveTaskToBack(true); // 在主界面连续 Back 也不退出程序，必须 登出 或者 强制关闭进程 才完全退出
+          }
+          return true;
+      }
+      return super.onKeyDown(keyCode, event);
+  }
 }
 
 
