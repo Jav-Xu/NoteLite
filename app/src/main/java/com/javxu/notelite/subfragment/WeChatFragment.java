@@ -59,7 +59,8 @@ public class WeChatFragment extends Fragment {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                initData(++page); //不合适，应该在请求成功后再加，或者在失败后减一
+                initData(++page);
+                //TODO 不合适，应该在请求成功后再加，或者在失败后减一
             }
         });
     }

@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         username = et_login_username.getText().toString().trim();
         password = et_login_password.getText().toString().trim();
 
-        if ((TextUtils.isEmpty(username) != true) && (TextUtils.isEmpty(password) != true)) {
+        if (!TextUtils.isEmpty(username) && (!TextUtils.isEmpty(password))) {
 
             mMyDialog.show();
 
@@ -123,7 +123,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if (user.getEmailVerified()) { // 再判断邮箱是否验证成功
                             mMyDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                             mMyDialog.setTitleText("登录成功");
-                            mHandler.sendEmptyMessageDelayed(DELAY, 2000);
+                            mHandler.sendEmptyMessageDelayed(DELAY, 1000);
                             // 这里注意，Dialog Attach 着 Activity，注意生命周期
                             //startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             //finish();

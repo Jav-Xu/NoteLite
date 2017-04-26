@@ -237,7 +237,7 @@ public class NoteDetailActivity extends AppCompatActivity implements View.OnClic
 
     private void initData() {
         int noteId = getIntent().getIntExtra("NOTEID", -1);
-        if (noteId == -1) {
+        if (noteId == -1) { // 证明是新建笔记
             isNewNote = true;
             mNote = new Note();
             editable = true; // 新建的 Note 要一开始就处于编辑状态
@@ -336,7 +336,8 @@ public class NoteDetailActivity extends AppCompatActivity implements View.OnClic
                 "NoteLite_IMG_" + String.valueOf(mNote.getId()) + "_" + System.currentTimeMillis() + ".jpg");
         mCropFile = new File(FileUtil.getExternalPicturesFileDir(),
                 "NoteLite_IMG_CROP_" + String.valueOf(mNote.getId()) + "_" + System.currentTimeMillis() + ".jpg");
-
+        // 一个主意（Bug）：新建笔记 mNote.getId() 为 0，也就是初始设置图片 id 为 0，在之后改变图片文件之后，id 才会按历史递增
+        //TODO 新建笔记 mNote.getId() 为 0，在保存一次之后，再改变图片文件 id 才会修正，思索修改方法
         try {
             mImageFile.createNewFile();
             mCropFile.createNewFile();

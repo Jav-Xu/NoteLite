@@ -129,6 +129,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mNameTextView = (TextView) headerView.findViewById(R.id.username);
     }
 
+    private void initToolbar() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(false);
+        }
+        setSupportActionBar(mToolbar);
+        mToolbar.setTitle("NoteLite");
+        mToolbar.setNavigationIcon(R.drawable.ic_menu);
+    }
+
     private void initData() {
         MyUser user = BmobUser.getCurrentUser(MyUser.class);
         String username = user.getUsername();
@@ -139,17 +150,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mNameTextView.setText(username);
         mEmailTextView.setText(email);
         Glide.with(this).load(imageByteArray).error(R.mipmap.ic_launcher).into(mNavCircleImageView);
-    }
-
-    private void initToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(false);
-        }
-        setSupportActionBar(mToolbar);
-        mToolbar.setTitle("NoteLite");
-        mToolbar.setNavigationIcon(R.drawable.ic_menu);
     }
 
     private void initViewPager() {

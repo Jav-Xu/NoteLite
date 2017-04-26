@@ -64,7 +64,7 @@ public class WeChatAdapter extends RecyclerView.Adapter<WeChatAdapter.WeChatHold
                 mWeChatTitle.setText(wechat.title);
                 mWeChatSource.setText(wechat.source);
 
-                itemView.setOnClickListener(new View.OnClickListener() {
+                mItemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = WeChatActivity.getIntent(mContext, wechat);
