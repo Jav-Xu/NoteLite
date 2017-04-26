@@ -96,7 +96,7 @@ public class WeatherFragment extends Fragment {
     }
 
     private void loadBingPic() {
-        String requestBingPic = "http://guolin.tech/api/bing_pic";
+        String requestBingPic = StaticUtil.BINGPIC;
         RxVolley.get(requestBingPic, new HttpCallback() {
             @Override
             public void onSuccess(String t) {

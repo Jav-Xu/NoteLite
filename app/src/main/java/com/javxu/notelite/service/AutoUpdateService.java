@@ -12,6 +12,7 @@ import android.preference.PreferenceManager;
 import com.javxu.notelite.gson.Weather;
 import com.javxu.notelite.utils.JSONUtil;
 import com.javxu.notelite.utils.SharedUtil;
+import com.javxu.notelite.utils.StaticUtil;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.http.VolleyError;
@@ -51,7 +52,7 @@ public class AutoUpdateService extends Service {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString = pref.getString("weather", null);
         if (weatherString != null) {
-            String weatherUrl = "https://api.heweather.com/x3/weather?cityid=CN101010100&key=bc0418b57b2d4918819d3974ac1285d9";
+            String weatherUrl = StaticUtil.BJWEATHER;
             RxVolley.get(weatherUrl, new HttpCallback() {
                 @Override
                 public void onFailure(VolleyError error) {
@@ -72,7 +73,7 @@ public class AutoUpdateService extends Service {
     }
 
     private void updateBingPicCache() {
-        String requestBingPic = "http://guolin.tech/api/bing_pic";
+        String requestBingPic = StaticUtil.BINGPIC;
         RxVolley.get(requestBingPic, new HttpCallback() {
             @Override
             public void onFailure(VolleyError error) {
