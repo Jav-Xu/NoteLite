@@ -68,4 +68,5 @@ dependencies {
         exclude group: 'com.google.code.gson'
     }
     testCompile 'junit:junit:4.12'
+    compile project(path: ':libzxing')
 }

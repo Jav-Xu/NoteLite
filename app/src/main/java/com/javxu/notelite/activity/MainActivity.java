@@ -20,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -30,6 +31,7 @@ import com.javxu.notelite.R;
 import com.javxu.notelite.adapter.FragmentApater;
 import com.javxu.notelite.bean.MyUser;
 import com.javxu.notelite.utils.StaticUtil;
+import com.xys.libzxing.zxing.activity.CaptureActivity;
 
 import java.util.Arrays;
 
@@ -39,6 +41,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final int REQUEST_PERMISSION = 0;
+    public static final int REQUEST_SCAN = 1;
 
     private Toolbar mToolbar;
     private TabLayout mTabLayout;
@@ -192,10 +195,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_main, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
+                break;
+            case R.id.scan:
+                Intent scanIntent = new Intent(MainActivity.this, CaptureActivity.class);
+                startActivityForResult(scanIntent, REQUEST_SCAN);
                 break;
             default:
         }
@@ -224,6 +237,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     return;
                 } else {
                     Toast.makeText(MainActivity.this, "你拒绝了一些权限，之后将不能进行相片操作", Toast.LENGTH_LONG).show();
+                }
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case REQUEST_SCAN:
+                if (resultCode == RESULT_OK) {
+                    Bundle bundle = data.getExtras();
+                    String scanResult = bundle.getString("result");
+                    Toast.makeText(MainActivity.this,scanResult,Toast.LENGTH_LONG).show();
+                    // TODO 合理处理扫描结果
                 }
                 break;
         }

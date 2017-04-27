@@ -1,0 +1,149 @@
+{
+    "android_gradle_plugin_version": "2.3.1",
+    "apk_path": "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/app/build/outputs/apk/app-debug.apk",
+    "apt": {
+        
+    },
+    "apt_libraries": {
+        "dagger": false,
+        "butterknife": false
+    },
+    "auto_dependency": true,
+    "build_cache_dir": "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/app/build/freeline",
+    "build_directory": "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/app/build",
+    "build_script": "./gradlew :app:assembleDebug",
+    "build_script_work_directory": "",
+    "build_tools_directory": "/Users/Jav-Xu/Library/Android/sdk/build-tools/25.0.0",
+    "build_tools_version": "25.0.0",
+    "check_sources_md5": [
+        
+    ],
+    "compile_sdk_directory": "/Users/Jav-Xu/Library/Android/sdk/platforms/android-25",
+    "compile_sdk_version": "android-25",
+    "databinding": [
+        
+    ],
+    "databinding_compiler_jar": "",
+    "databinding_modules": [
+        
+    ],
+    "debug_package": "com.javxu.notelite",
+    "exclude_dep_res_paths": [
+        
+    ],
+    "extra_dep_res_paths": [
+        
+    ],
+    "freeline_cache_dir": "/Users/Jav-Xu/AndroidStudioProjects/NoteLite",
+    "freeline_gradle_plugin_version": "0.8.7",
+    "ignore_resource_ids": [
+        "avd_hide_password_1",
+        "avd_hide_password_2",
+        "avd_hide_password_3",
+        "avd_show_password_1",
+        "avd_show_password_2",
+        "avd_show_password_3"
+    ],
+    "java_home": "/Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home",
+    "launcher": "com.javxu.notelite.activity.LoginActivity",
+    "main_assets_directory": [
+        "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/app/src/debug/assets",
+        "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/app/src/main/assets"
+    ],
+    "main_jniLibs_directory": [
+        "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/app/src/debug/jniLibs",
+        "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/app/src/main/jniLibs"
+    ],
+    "main_jni_directory": [
+        "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/app/src/debug/jni",
+        "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/app/src/main/jni"
+    ],
+    "main_manifest_path": "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/app/src/main/AndroidManifest.xml",
+    "main_project_dir": "app",
+    "main_project_name": "app",
+    "main_r_path": "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/app/build/generated/source/r/debug/R.java",
+    "main_res_directory": [
+        "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/app/src/debug/res",
+        "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/app/src/main/res"
+    ],
+    "main_src_directory": [
+        "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/app/src/debug/java",
+        "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/app/src/main/java"
+    ],
+    "module_dependencies": {
+        "app": [
+            "libzxing"
+        ],
+        "libzxing": [
+            
+        ]
+    },
+    "modules": [
+        {
+            "name": "app",
+            "path": "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/app"
+        },
+        {
+            "name": "libzxing",
+            "path": "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/libzxing"
+        }
+    ],
+    "package": "com.javxu.notelite",
+    "product_flavor": "",
+    "project_source_sets": {
+        "app": {
+            "main_assets_directory": [
+                "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/app/src/debug/assets",
+                "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/app/src/main/assets"
+            ],
+            "main_jniLibs_directory": [
+                "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/app/src/debug/jniLibs",
+                "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/app/src/main/jniLibs"
+            ],
+            "main_jni_directory": [
+                "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/app/src/debug/jni",
+                "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/app/src/main/jni"
+            ],
+            "main_manifest_path": "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/app/src/main/AndroidManifest.xml",
+            "main_res_directory": [
+                "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/app/src/debug/res",
+                "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/app/src/main/res"
+            ],
+            "main_src_directory": [
+                "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/app/src/debug/java",
+                "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/app/src/main/java"
+            ]
+        },
+        "libzxing": {
+            "main_assets_directory": [
+                "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/libzxing/src/release/assets",
+                "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/libzxing/src/main/assets"
+            ],
+            "main_jniLibs_directory": [
+                "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/libzxing/src/release/jniLibs",
+                "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/libzxing/src/main/jniLibs"
+            ],
+            "main_jni_directory": [
+                "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/libzxing/src/release/jni",
+                "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/libzxing/src/main/jni"
+            ],
+            "main_manifest_path": "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/libzxing/src/main/AndroidManifest.xml",
+            "main_res_directory": [
+                "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/libzxing/src/release/res",
+                "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/libzxing/src/main/res"
+            ],
+            "main_src_directory": [
+                "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/libzxing/src/release/java",
+                "/Users/Jav-Xu/AndroidStudioProjects/NoteLite/libzxing/src/main/java"
+            ]
+        }
+    },
+    "project_type": "gradle",
+    "retrolambda": {
+        
+    },
+    "root_dir": "/Users/Jav-Xu/AndroidStudioProjects/NoteLite",
+    "sdk_directory": "/Users/Jav-Xu/Library/Android/sdk",
+    "use_jdk8": true,
+    "use_system_gradle": false
+}
