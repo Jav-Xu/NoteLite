@@ -50,10 +50,13 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoHolder>
             mPhotoImageView = (ImageView) itemView.findViewById(R.id.imageView_photo);
         }
 
-        public void bindHolder(final Photo photo) {
+        public void bindHolder(final Photo photo, int position) {
             //ImageUtil.loadImage(imageUrl,mPhotoImageView);
             final String imageUrl = photo.url;
-            Glide.with(mContext).load(imageUrl).override(width / 2, 300).into(mPhotoImageView);
+            Glide.with(mContext).load(imageUrl)
+                    .placeholder(R.mipmap.ic_launcher)
+                    .override(width / 2, 200 + (position % 4 * 50))
+                    .into(mPhotoImageView);
             mPhotoImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -73,7 +76,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoHolder>
     @Override
     public void onBindViewHolder(PhotoHolder holder, int position) {
         Photo photo = mPhotoList.get(position);
-        holder.bindHolder(photo);
+        holder.bindHolder(photo, position);
     }
 
     @Override
