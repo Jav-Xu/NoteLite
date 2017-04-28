@@ -19,6 +19,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <!-- 允许相机使用 -->
     <uses-permission android:name="android.permission.CAMERA"/>
+
     <application
         android:name=".application.MyApplication"
         android:allowBackup="true"
@@ -58,30 +59,40 @@
         <!-- BackActivityTheme -->
         <activity
             android:name=".activity.RegisterActivity"
+            android:label="@string/text_registered"
             android:theme="@style/BackActivityTheme">
         </activity>
         <activity
             android:name=".activity.ForgetActivity"
+            android:label="@string/text_forget_password"
             android:theme="@style/BackActivityTheme">
         </activity>
         <activity
             android:name=".activity.PasswordActivity"
+            android:label="@string/text_password_serve"
             android:theme="@style/BackActivityTheme">
         </activity>
         <activity
             android:name=".activity.SettingsActivity"
+            android:label="Settings"
+            android:theme="@style/BackActivityTheme">
+        </activity>
+        <activity
+            android:name=".activity.ToolsActivity"
+            android:label="实用工具"
             android:theme="@style/BackActivityTheme">
         </activity>
         <!-- BackActivityTheme -->
 
 
-        <!-- 根据版本不同对Theme有默认AppTheme和透明状态栏Theme之分 -->
+        <!-- TransparentBarActivityTheme 根据版本不同对Theme有默认AppTheme和透明状态栏Theme之分 -->
         <activity
             android:name=".activity.NoteDetailActivity"
             android:theme="@style/TransparentBarActivityTheme">
         <!--android:parentActivityName=".activity.MainActivity"-->
         </activity>
-        <!-- 根据版本不同对Theme有默认AppTheme和透明状态栏Theme之分 -->
+        <!-- TransparentBarActivityTheme 根据版本不同对Theme有默认AppTheme和透明状态栏Theme之分 -->
+
 
         <!-- HalfTransActivityTheme -->
         <activity
