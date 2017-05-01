@@ -116,12 +116,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 switch (item.getItemId()) {
                     case R.id.nav_list:
                         mDrawerLayout.closeDrawers();
-                        break;
-                    case R.id.nav_tools:
-                        mDrawerLayout.closeDrawers();
+                        mViewPager.setCurrentItem(0);
                         break;
                     case R.id.nav_trash:
                         mDrawerLayout.closeDrawers();
+                        break;
+                    case R.id.nav_weather:
+                        startActivity(new Intent(MainActivity.this, WeatherActivity.class));
                         break;
                     case R.id.nav_share:
                         mDrawerLayout.closeDrawers();
@@ -165,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initViewPager() {
-        String[] titles = {"笔记列表", "今日天气", "微信精选", "美图欣赏"};
+        String[] titles = {"笔记列表", "微信精选", "美图欣赏", "实用工具"};
         mHomeFragmentAdapter = new FragmentApater(getSupportFragmentManager(), Arrays.asList(titles));
         mViewPager.setAdapter(mHomeFragmentAdapter);
         mTabLayout.setupWithViewPager(mViewPager); // 将TabLayout和ViewPager关联起来。

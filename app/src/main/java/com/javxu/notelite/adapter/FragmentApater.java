@@ -6,8 +6,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.javxu.notelite.subfragment.GalleryFragment;
 import com.javxu.notelite.subfragment.NoteListFragment;
+import com.javxu.notelite.subfragment.ToolsFragment;
 import com.javxu.notelite.subfragment.WeChatFragment;
-import com.javxu.notelite.subfragment.WeatherFragment;
 
 import java.util.List;
 
@@ -34,13 +34,13 @@ public class FragmentApater extends FragmentStatePagerAdapter {
                 fragment = new NoteListFragment();
                 break;
             case 1:
-                fragment = new WeatherFragment();
-                break;
-            case 2:
                 fragment = new WeChatFragment();
                 break;
-            case 3:
+            case 2:
                 fragment = new GalleryFragment();
+                break;
+            case 3:
+                fragment = new ToolsFragment();
                 break;
             default:
         }

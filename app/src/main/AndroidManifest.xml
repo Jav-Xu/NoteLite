@@ -77,11 +77,6 @@
             android:label="Settings"
             android:theme="@style/BackActivityTheme">
         </activity>
-        <activity
-            android:name=".activity.ToolsActivity"
-            android:label="实用工具"
-            android:theme="@style/BackActivityTheme">
-        </activity>
         <!-- BackActivityTheme -->
 
 
@@ -89,7 +84,11 @@
         <activity
             android:name=".activity.NoteDetailActivity"
             android:theme="@style/TransparentBarActivityTheme">
-        <!--android:parentActivityName=".activity.MainActivity"-->
+            <!--android:parentActivityName=".activity.MainActivity"-->
+        </activity>
+        <activity
+            android:name=".activity.WeatherActivity"
+            android:theme="@style/TransparentBarActivityTheme">
         </activity>
         <!-- TransparentBarActivityTheme 根据版本不同对Theme有默认AppTheme和透明状态栏Theme之分 -->
 

@@ -90,7 +90,9 @@ public class WeChatFragment extends Fragment {
 
     private void showWeChatsResult(WeChatsResult result) {
         for (WeChat weChat : result.weChats.weChatList) {
-            mWeChatList.add(0, weChat);
+            if (weChat.firstImg != "") {
+                mWeChatList.add(0, weChat);
+            }
         }
         mWeChatAdapter.notifyDataSetChanged();
     }
