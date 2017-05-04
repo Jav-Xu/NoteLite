@@ -79,6 +79,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             username = SharedUtil.getString(this, StaticUtil.SHARE_LAST_USERNAME, "");
             password = SharedUtil.getString(this, StaticUtil.SHARE_LAST_PASSWORD, "");
             et_login_username.setText(username);
+            et_login_username.setSelection(username.length());
             et_login_password.setText(password);
         }
     }
