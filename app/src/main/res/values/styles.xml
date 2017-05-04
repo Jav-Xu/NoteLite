@@ -11,13 +11,17 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
     <!--透明状态栏（不是无状态栏）主题-->
-    <style name="TransparentBarActivityTheme" parent="AppTheme">
-        <!--<item name="windowNoTitle">true</item>
+    <style name="TransparentBarActivityTheme" parent="AppTheme"/>
+
+    <!--无状态栏主题-->
+    <style name="NoStatusBarActivityTheme" parent="AppTheme">
+        <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
-        <item name="android:windowContentOverlay">@null</item>-->
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
+    <!--含ActionBar的带默认返回键的主题-->
     <style name="BackActivityTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -25,13 +29,15 @@
         <item name="preferenceTheme">@style/myPreferenceScreen</item>
     </style>
 
+    <!--设置界面主题-->
     <style name="myPreferenceScreen" parent="PreferenceThemeOverlay.v14.Material">
         <item name="android:fadeScrollbars">true</item>
         <item name="android:scrollbars">vertical</item>
         <item name="android:scrollbarFadeDuration">1</item>
     </style>
 
-    <style name="HalfTransActivityTheme" parent="Theme.AppCompat.NoActionBar">
+    <!--半透明主题-->
+    <style name="HalfTransActivityTheme" parent="AppTheme">
         <item name="android:windowBackground">@color/halftransparent</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsTranslucent">true</item>
