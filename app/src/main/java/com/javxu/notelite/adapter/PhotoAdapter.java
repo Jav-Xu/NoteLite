@@ -55,7 +55,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoHolder>
             final String imageUrl = photo.url;
             Glide.with(mContext).load(imageUrl)
                     .placeholder(R.mipmap.ic_launcher)
-                    .override(width / 2, 200 + (position % 4 * 50))
+                    .override(width / 2, 300 + (position % 4 * 60))
                     .into(mPhotoImageView);
             mPhotoImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
