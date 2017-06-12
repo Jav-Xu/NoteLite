@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.javxu.notelite.R;
+import com.javxu.notelite.base.BaseActivity;
 import com.javxu.notelite.gson.Forecast;
 import com.javxu.notelite.gson.Weather;
 import com.javxu.notelite.service.AutoUpdateService;
@@ -35,7 +35,7 @@ import com.kymjs.rxvolley.http.VolleyError;
  * Description:   北京天气Activity
  */
 
-public class WeatherActivity extends AppCompatActivity {
+public class WeatherActivity extends BaseActivity {
 
     private ImageView bingPicImg;
     private SwipeRefreshLayout swipeRefreshlayout;

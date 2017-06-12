@@ -15,7 +15,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -29,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.javxu.notelite.R;
+import com.javxu.notelite.base.BaseActivity;
 import com.javxu.notelite.bean.Note;
 import com.javxu.notelite.utils.DateUtil;
 import com.javxu.notelite.utils.FileUtil;
@@ -47,7 +47,7 @@ import java.util.List;
 
 import static com.javxu.notelite.R.id.collapsing_toolbal;
 
-public class NoteDetailActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
+public class NoteDetailActivity extends BaseActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
 
     public static final int REQUEST_PHOTO = 1;
     public static final int REQUEST_GALLERY = 2;

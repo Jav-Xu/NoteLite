@@ -16,7 +16,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.view.KeyEvent;
@@ -29,6 +28,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.javxu.notelite.R;
 import com.javxu.notelite.adapter.FragmentApater;
+import com.javxu.notelite.base.BaseActivity;
 import com.javxu.notelite.bean.MyUser;
 import com.javxu.notelite.utils.StaticUtil;
 import com.xys.libzxing.zxing.activity.CaptureActivity;
@@ -38,7 +38,7 @@ import java.util.Arrays;
 import cn.bmob.v3.BmobUser;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     public static final int REQUEST_PERMISSION = 0;
     public static final int REQUEST_SCAN = 1;
@@ -246,12 +246,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode){
+        switch (requestCode) {
             case REQUEST_SCAN:
                 if (resultCode == RESULT_OK) {
                     Bundle bundle = data.getExtras();
                     String scanResult = bundle.getString("result");
-                    Toast.makeText(MainActivity.this,scanResult,Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, scanResult, Toast.LENGTH_LONG).show();
                     // TODO 合理处理扫描结果
                 }
                 break;
@@ -265,19 +265,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-      if (keyCode == KeyEvent.KEYCODE_BACK) {
-          if ((System.currentTimeMillis() - mExitTime) > 1000) {//
-              // 如果两次按键时间间隔大于2000毫秒，则不退出
-              Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
-              mExitTime = System.currentTimeMillis();// 更新mExitTime
-          } else {
-              //System.exit(0);// 否则退出程序
-              moveTaskToBack(true); // 在主界面连续 Back 也不退出程序，必须 登出 或者 强制关闭进程 才完全退出
-          }
-          return true;
-      }
-      return super.onKeyDown(keyCode, event);
-  }
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if ((System.currentTimeMillis() - mExitTime) > 1000) {//
+                // 如果两次按键时间间隔大于1000毫秒，则不退出
+                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                mExitTime = System.currentTimeMillis();// 更新mExitTime
+            } else {
+                //System.exit(0);// 否则退出程序
+                moveTaskToBack(true); // 在主界面连续 Back 也不退出程序，必须 登出 或者 强制关闭进程 才完全退出
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }
 
 

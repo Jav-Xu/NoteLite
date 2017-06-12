@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,11 +12,12 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
 import com.javxu.notelite.R;
+import com.javxu.notelite.base.BaseActivity;
 import com.javxu.notelite.gson.WeChat;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class WeChatActivity extends AppCompatActivity  {
+public class WeChatActivity extends BaseActivity {
 
     private SweetAlertDialog mMyDialog;
     private WebView mWebView;

@@ -14,7 +14,7 @@ import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
 
-public class PasswordActivity extends BackActivity implements View.OnClickListener{
+public class PasswordActivity extends BackActivity implements View.OnClickListener {
 
     private EditText et_now_password;
     private EditText et_new_password;

@@ -12,7 +12,6 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -25,6 +24,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.javxu.notelite.R;
+import com.javxu.notelite.base.BaseActivity;
 import com.javxu.notelite.bean.MyUser;
 import com.javxu.notelite.utils.FileUtil;
 import com.javxu.notelite.utils.ImageUtil;
@@ -38,7 +38,7 @@ import cn.bmob.v3.listener.UpdateListener;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class UserActivity extends AppCompatActivity implements View.OnClickListener {
+public class UserActivity extends BaseActivity implements View.OnClickListener {
 
     public static final int REQUEST_PHOTO = 11;
     public static final int REQUEST_GALLERY = 22;

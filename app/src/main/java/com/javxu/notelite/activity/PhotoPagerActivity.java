@@ -4,10 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 
 import com.javxu.notelite.R;
 import com.javxu.notelite.adapter.PhotoPagerAdapter;
+import com.javxu.notelite.base.BaseActivity;
 import com.javxu.notelite.gson.Photo;
 
 import java.io.Serializable;
@@ -22,7 +22,7 @@ import java.util.List;
  * Description:   照片详情ViewPager展示
  */
 
-public class PhotoPagerActivity extends AppCompatActivity {
+public class PhotoPagerActivity extends BaseActivity {
 
     private MyPhotoViewPager mViewPager;
     private List<Photo> mPhotoList;
