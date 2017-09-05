@@ -53,6 +53,11 @@
             android:name=".activity.WeChatActivity"
             android:theme="@style/AppTheme">
         </activity>
+        <activity
+            android:name=".activity.TrashActivity"
+            android:label="@string/trash"
+            android:theme="@style/AppTheme">
+        </activity>
         <!-- AppTheme(NoActionBar) -->
 
 

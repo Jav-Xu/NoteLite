@@ -119,7 +119,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         mViewPager.setCurrentItem(0);
                         break;
                     case R.id.nav_trash:
-                        mDrawerLayout.closeDrawers();
+                        startActivity(new Intent(MainActivity.this, TrashActivity.class));
                         break;
                     case R.id.nav_weather:
                         startActivity(new Intent(MainActivity.this, WeatherActivity.class));

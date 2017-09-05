@@ -137,19 +137,52 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
                 }
                 break;
             case R.id.delete:
-                new AlertDialog.Builder(this)
-                        .setTitle("注意：")
-                        .setMessage("是否确定删除该笔记？")
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (mNote.isSaved()) {
-                                    DataSupport.delete(Note.class, mNote.getId());
+                if (isNewNote) {
+                    new AlertDialog.Builder(this)
+                            .setTitle("注意：")
+                            .setMessage("是否确定删除该笔记？")
+                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if (mNote.isSaved()) {
+                                        DataSupport.delete(Note.class, mNote.getId());
+                                    }
+                                    finish();
                                 }
-                                finish();
-                            }
-                        })
-                        .setNegativeButton("取消", null).show();
+                            })
+                            .setNegativeButton("取消", null).show();
+                } else {
+                    if (mNote.isAbandoned()) {
+                        new AlertDialog.Builder(this)
+                                .setTitle("注意：")
+                                .setMessage("是否确定删除该笔记？")
+                                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if (mNote.isSaved()) {
+                                            DataSupport.delete(Note.class, mNote.getId());
+                                        }
+                                        finish();
+                                    }
+                                })
+                                .setNegativeButton("取消", null).show();
+                    } else {
+                        new AlertDialog.Builder(this)
+                                .setTitle("注意：")
+                                .setMessage("将笔记移入回收箱？")
+                                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if (mNote.isSaved()) {
+                                            mNote.setAbandoned(true);
+                                            mNote.update(mNote.getId());
+                                        }
+                                        finish();
+                                    }
+                                })
+                                .setNegativeButton("取消", null).show();
+                    }
+                }
                 break;
             case R.id.send:
                 Intent sendIntent = ShareCompat.IntentBuilder.from(NoteDetailActivity.this)

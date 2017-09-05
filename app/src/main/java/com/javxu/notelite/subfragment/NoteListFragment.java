@@ -49,7 +49,7 @@ public class NoteListFragment extends Fragment {
 
     public void updateList() {
 
-        mNotes = DataSupport.findAll(Note.class);
+        mNotes = DataSupport.where("abandoned = ?", "0").find(Note.class); // LitePal Boolean 存储形式居然是 0/1
 
         if (mNoteAdapter == null) {
             mNoteAdapter = new NoteAdapter(getActivity(), mNotes);

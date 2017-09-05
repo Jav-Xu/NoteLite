@@ -49,4 +49,5 @@
     <string name="hint_input_content">输入内容</string>
     <string name="note_content">笔记内容</string>
     <string name="share_note">Share Note</string>
+    <string name="trash">回收箱</string>
 </resources>

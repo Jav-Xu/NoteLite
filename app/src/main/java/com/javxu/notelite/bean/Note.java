@@ -17,6 +17,7 @@ public class Note extends DataSupport {
     private String noteImagePath;
     private Date noteDate;
     private boolean noteSolved;
+    private boolean abandoned;
 
     public Note() {
         noteTitle = new String();
@@ -74,4 +75,11 @@ public class Note extends DataSupport {
         this.noteSolved = noteSolved;
     }
 
+    public boolean isAbandoned() {
+        return abandoned;
+    }
+
+    public void setAbandoned(boolean abandoned) {
+        this.abandoned = abandoned;
+    }
 }
